@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#3b2a20">
 <title>Finn kattene</title>
 <style>
 :root{--bg:#FFF4E6;--card:#FFFFFF;--ink:#3b2a20;--muted:#8a7363;--line:#E8D5BF;--sel:#FFE9A8;--ok:#2E7D32;--warn:#C62828;}
@@ -84,13 +88,35 @@ input[type=range]{width:180px;accent-color:#EF6C5A}
 .confirm{background:var(--bg);border:2px dashed #EF6C5A;border-radius:14px;padding:12px;margin-top:12px}
 footer{margin-top:18px;text-align:center;font-size:12px;color:var(--muted)}
 @media (max-width:600px){body{padding:10px}.ctl{width:58px;height:58px}.ctl.big{width:68px;height:68px}.hint{display:none}}
+
+html{touch-action:manipulation;-webkit-text-size-adjust:100%}
+#play,.ctl,.dpad{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.dpad{display:flex;gap:10px;align-items:center;touch-action:none;padding:6px;margin:-6px;border-radius:44px}
+.ctl svg{display:block;margin:auto}
+.btn.ghost.fsb{display:inline-flex;align-items:center;gap:6px}
+.rotTip{display:none}
+@media (pointer:coarse){.ctl{width:78px;height:78px;font-size:32px}.ctl.big{width:92px;height:92px;font-size:36px}.ctl.gear{width:54px;height:54px}.dpad{gap:14px}}
+@media (pointer:coarse) and (max-width:600px){.ctl{width:70px;height:70px}.ctl.big{width:82px;height:82px}.ctl.gear{width:48px;height:48px}}
+/* fullskjerm (ekte eller «pseudo» for iPhone) */
+@media (max-width:600px){.ctrls{flex-wrap:wrap;row-gap:12px}.ctrls .util{order:3;width:100%;justify-content:center}.ctrls .hint{display:none}.fsb span{display:none}}
+body.fs{overflow:hidden}
+body.fs #play.on{position:fixed;inset:0;z-index:40;background:#120c08;display:flex;align-items:center;justify-content:center;touch-action:none}
+body.fs #play .stage{width:min(100vw,calc(100vh*16/9));width:min(100vw,calc(100dvh*16/9));height:auto;border:0;border-radius:0;box-shadow:none}
+body.fs #play .ctrls{position:absolute;left:0;right:0;bottom:0;margin:0;padding:10px max(14px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));pointer-events:none;align-items:flex-end}
+body.fs #play .ctrls .pad,body.fs #play .ctrls .dpad,body.fs #play .ctrls button{pointer-events:auto}
+body.fs #play .ctl{background:rgba(255,255,255,.42);border-color:rgba(59,42,32,.7);box-shadow:0 3px 0 rgba(59,42,32,.7);color:#3b2a20}
+body.fs #play .ctl.big{background:rgba(255,213,79,.78)}
+body.fs #play .ctl.on{background:rgba(255,255,255,.75)}
+body.fs #play .hint{display:none}
+body.fs #play .rotTip{position:absolute;top:max(8px,env(safe-area-inset-top));left:0;right:0;text-align:center;color:#fff;font-weight:700;font-size:14px;opacity:.8}
+@media (orientation:portrait){body.fs #play .rotTip{display:block}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>Finn kattene 🐱🌺<small data-i18n="sub"></small></h1>
-    <div class="hb"><button class="btn ghost" id="setBtn" data-i18n="settings"></button><button class="btn ghost" id="muteBtn"></button></div>
+    <div class="hb"><button class="btn ghost fsb" id="fsTop"></button><button class="btn ghost" id="setBtn" data-i18n="settings"></button><button class="btn ghost" id="muteBtn"></button></div>
   </header>
 
   <!-- START -->
@@ -161,14 +187,18 @@ footer{margin-top:18px;text-align:center;font-size:12px;color:var(--muted)}
   <!-- SPILL -->
   <section id="play">
     <div class="stage"><canvas id="game"></canvas></div>
+    <div class="rotTip" data-i18n="rotTip"></div>
     <div class="ctrls">
-      <div class="pad">
-        <button class="ctl" data-k="left" aria-label="←">◀</button>
-        <button class="ctl" data-k="right" aria-label="→">▶</button>
+      <div class="dpad" id="dpad">
+        <button class="ctl" data-dir="left" aria-label="←">◀</button>
+        <button class="ctl" data-dir="right" aria-label="→">▶</button>
       </div>
       <div class="hint" id="playHint" data-i18n="ctrlHint"></div>
-      <div class="pad">
+      <div class="pad util">
+        <button class="ctl gear" id="fsBtn" aria-label="⛶"></button>
         <button class="ctl gear" id="gearBtn" aria-label="⚙">⚙</button>
+      </div>
+      <div class="pad">
         <button class="ctl" data-k="jump" aria-label="↑">⤒</button>
         <button class="ctl big" data-k="search" aria-label="🔍">🔍</button>
       </div>
@@ -303,8 +333,9 @@ nb:{
  roleH:'🙈 Gjemme meg',roleS:'🔍 Lete',roleO:'👀 Se på',players:'Spillere',settingsH:'Innstillinger',bots:'🤖 Roboter:',botH:'+ gjemmer seg',botS:'+ leter',botBal:'⚖ Jevn ut',
  rounds:'🔁 Runder: ',mins:'⏱ Letetid: ',minU:'{0} min',hints:'💡 Hint fra gjemte katter: ',on:'På',off:'Av',dogs:'🐶 Valper: ',fish:'🐟 Blomsterfisker: ',
  startRound:'Start runde {0} av {1} ▶',waitHost:'Venter på at verten starter …',standings:'🌺 Stillingen',
+ fsOn:'Fullskjerm',fsOff:'Vanlig visning',touchHint:'◀ ▶ gå (dra med tommelen) · ⤒ hopp / opp · 🔍 gjem deg / let / ned',rotTip:'🔄 Snu mobilen for større bilde',
  ctrlHint:'← → gå · ↑ hopp / opp · mellomrom / ↓ gjem deg / let / ned · Esc ⚙',results:'🏆 Resultatliste',newGame:'Nytt spill',
- footer:'Figurene er tegnet av Isabella 2026 · v0.7 · Blomstersangen er sunget av barn',
+ footer:'Figurene er tegnet av Isabella 2026 · v0.8 · Blomstersangen er sunget av barn',
  errLib:'Kunne ikke laste nettverksbiblioteket',errConn:'Fikk ikke kontakt',revealOk:'Jeg gjemte meg godt! 😼',noSpot:'Ingen gjemmesteder her',waitTime:'Vent til tiden starter!',ouch:'Au!',
  startSeek:'Lukk øynene og tell til 10 …',startHide:'Gjem deg! Du har 10 sekunder 🙈',go:'Klar eller ei – nå letes det! 🔍',empty:'Tomt {0}!',
  found:'Fant {0}! {0} gir {1} en blomst 🌺',tagged:'Tatt!',dogTook:'Valpen tok en blomst! 🐶',woof:'Voff!',woof2:'Voff voff!',
@@ -339,8 +370,9 @@ zh:{
  roleH:'🙈 我来躲',roleS:'🔍 我来找',roleO:'👀 观看',players:'玩家',settingsH:'设置',bots:'🤖 机器人：',botH:'+ 躲的',botS:'+ 找的',botBal:'⚖ 补齐',
  rounds:'🔁 轮数：',mins:'⏱ 寻找时间：',minU:'{0} 分钟',hints:'💡 藏着的猫给提示：',on:'开',off:'关',dogs:'🐶 小狗：',fish:'🐟 带花小鱼：',
  startRound:'开始第 {0} 轮（共 {1} 轮）▶',waitHost:'等待主机开始……',standings:'🌺 当前排名',
+ fsOn:'全屏',fsOff:'退出全屏',touchHint:'◀ ▶ 走（拇指可左右滑）· ⤒ 跳 / 上楼 · 🔍 躲 / 找 / 下楼',rotTip:'🔄 把手机横过来，画面更大',
  ctrlHint:'← → 走 · ↑ 跳 / 上楼 · 空格 / ↓ 躲 / 找 / 下楼 · Esc ⚙',results:'🏆 成绩表',newGame:'新游戏',
- footer:'角色原画：Isabella 2026 · v0.7 · 小红花之歌由孩子们演唱',
+ footer:'角色原画：Isabella 2026 · v0.8 · 小红花之歌由孩子们演唱',
  errLib:'无法加载联网组件',errConn:'连接不上',revealOk:'我藏得好吧！😼',noSpot:'这里没有能藏的地方',waitTime:'等时间开始再找！',ouch:'哎哟！',
  startSeek:'闭上眼睛数到 10……',startHide:'快躲起来！你有 10 秒 🙈',go:'准备好了吗——开始找啦！🔍',empty:'{0}没有猫！',
  found:'找到 {0} 啦！{0} 送给 {1} 一朵小红花 🌺',tagged:'抓到了！',dogTook:'小狗抢走了一朵花！🐶',woof:'汪！',woof2:'汪汪！',
@@ -375,8 +407,9 @@ en:{
  roleH:'🙈 Hide',roleS:'🔍 Seek',roleO:'👀 Watch',players:'Players',settingsH:'Settings',bots:'🤖 Robots:',botH:'+ hider',botS:'+ seeker',botBal:'⚖ Balance',
  rounds:'🔁 Rounds: ',mins:'⏱ Seek time: ',minU:'{0} min',hints:'💡 Hints from hidden cats: ',on:'On',off:'Off',dogs:'🐶 Puppies: ',fish:'🐟 Flower fish: ',
  startRound:'Start round {0} of {1} ▶',waitHost:'Waiting for the host to start …',standings:'🌺 Standings',
+ fsOn:'Fullscreen',fsOff:'Exit fullscreen',touchHint:'◀ ▶ walk (slide your thumb) · ⤒ jump / up · 🔍 hide / search / down',rotTip:'🔄 Turn your phone sideways for a bigger view',
  ctrlHint:'← → walk · ↑ jump / up · space / ↓ hide / search / down · Esc ⚙',results:'🏆 Results',newGame:'New game',
- footer:'Characters drawn by Isabella 2026 · v0.7 · The flower song is sung by children',
+ footer:'Characters drawn by Isabella 2026 · v0.8 · The flower song is sung by children',
  errLib:'Could not load the network library',errConn:'Could not connect',revealOk:'I hid well! 😼',noSpot:'No hiding place here',waitTime:'Wait until the time starts!',ouch:'Ouch!',
  startSeek:'Close your eyes and count to 10 …',startHide:'Hide! You have 10 seconds 🙈',go:'Ready or not – here we come! 🔍',empty:'Nobody {0}!',
  found:'Found {0}! {0} gives {1} a flower 🌺',tagged:'Caught!',dogTook:'The puppy took a flower! 🐶',woof:'Woof!',woof2:'Woof woof!',
@@ -1365,7 +1398,7 @@ function onEvent(k,a,b,s){
   else if(k==='allfound'){setTimeout(()=>{banner={text:t('allFound'),t:3,max:3};},1500);for(let i=0;i<60;i++)parts.push({type:'petal',x:camX+rnd(0,VW),y:camY+rnd(-200,0),vx:rnd(-30,30),vy:rnd(60,140),life:4,max:4,r:rnd(4,7),rot:rnd(0,6)});}
   else if(k==='timeup'){banner={text:t('timeUp'),t:2.6,max:2.6};}
 }
-function bonk(){tone(170,.12,'square',.07,0,90);tone(95,.16,'sine',.14);}
+function bonk(){tone(170,.12,'square',.07,0,90);tone(95,.16,'sine',.14);try{navigator.vibrate&&navigator.vibrate(30);}catch(e){}}
 function voff(v){v=v||1;tone(320,.09,'square',.06*v,0,230);tone(300,.11,'square',.06*v,.15,210);}
 
 /* ================= Tegning av spillet ================= */
@@ -1461,7 +1494,7 @@ function updFx(dt){
 
 /* ================= Lobby ================= */
 let screen='start',lobSig='',lobCards=[];
-function show(id){screen=id;['start','lobby','play','awards'].forEach(k=>document.getElementById(k).classList.toggle('on',k===id));}
+function show(id){screen=id;['start','lobby','play','awards'].forEach(k=>document.getElementById(k).classList.toggle('on',k===id));if(typeof applyFs==='function'){applyFs();syncWake();}}
 function isHost(){return !!HS;}
 function renderLobby(){
   const modeTxt={solo:t('modeSolo'),room:t('modeRoom'),peer:t('modePeer',Net.code),local:t('modeLocal')}[Net.kind]||'';
@@ -1555,7 +1588,7 @@ function frame(ts){
     let want='lobby';if(GS){if(GS.ph==='awards')want='awards';else if(GS.ph==='hide'||GS.ph==='seek'||GS.ph==='over')want='play';}
     if(want==='play'){
       if(GS.rd!==lastRd){lastRd=GS.rd;lastEv=-1;startLocalRound();}
-      if(screen!=='play'){show('play');document.querySelector('#play .stage').scrollIntoView({behavior:'smooth',block:'center'});}
+      if(screen!=='play'){show('play');if(!document.body.classList.contains('fs'))document.querySelector('#play .stage').scrollIntoView({behavior:'smooth',block:'center'});}
       processEvents();if(GS.pz){}else if(Lp)myTick(dt);else{if(pressed.left)obsIdx--;if(pressed.right)obsIdx++;}
       pubMe();smoothAll(dt);updFx(dt);render(dt);
     }else{
@@ -1593,7 +1626,7 @@ const KEYMAP={ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:
 addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();toggleSettings();return;}const k=KEYMAP[e.key];if(!k||screen!=='play'||setOpen||e.target.tagName==='INPUT')return;e.preventDefault();if(!keys[k])pressed[k]=true;keys[k]=true;});
 addEventListener('keyup',e=>{const k=KEYMAP[e.key];if(k)keys[k]=false;});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false;});
-document.querySelectorAll('.ctl').forEach(b=>{const k=b.dataset.k;
+document.querySelectorAll('.ctl[data-k]').forEach(b=>{const k=b.dataset.k;
   const on=e=>{e.preventDefault();ac();if(!keys[k])pressed[k]=true;keys[k]=true;b.classList.add('on');};
   const off=()=>{keys[k]=false;b.classList.remove('on');};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointerleave',off);b.addEventListener('pointercancel',off);b.addEventListener('contextmenu',e=>e.preventDefault());});
@@ -1605,7 +1638,7 @@ const muteBtn=document.getElementById('muteBtn');muteBtn.onclick=()=>{muted=!mut
 
 /* ================= Innstillinger, språk, avslutt ================= */
 let setOpen=false;const tt=(...a)=>t(...a);
-function setLang(l){LANG=l;try{localStorage.setItem('fk2_lang',JSON.stringify(l));}catch(e){}applyLang();muteBtn.textContent=muted?t('muted'):t('sound');
+function setLang(l){LANG=l;try{localStorage.setItem('fk2_lang',JSON.stringify(l));}catch(e){}applyLang();applyFs();muteBtn.textContent=muted?t('muted'):t('sound');
   document.getElementById('pagesLink').textContent=PAGES_URL;lobSig='';awardSig='';renderSettings();}
 function renderSettings(){
   const ls=document.getElementById('langSet');ls.innerHTML='';const lb=document.createElement('span');lb.textContent=t('lang');ls.append(lb);
@@ -1638,10 +1671,54 @@ document.getElementById('catName').value=myLob.cn||'';
 document.getElementById('exitBtn').onclick=()=>{if(!Net.kind){toggleSettings(false);return;}document.getElementById('exitBox').style.display='';};
 document.getElementById('exitNo').onclick=()=>{document.getElementById('exitBox').style.display='none';};
 document.getElementById('exitYes').onclick=()=>{try{netSet({g:null,me:null,lob:null,act:null});Net.send();}catch(e){}setTimeout(()=>location.reload(),150);};
+
+/* ================= Berøring og fullskjerm ================= */
+const COARSE=matchMedia('(pointer:coarse)').matches;
+if(COARSE){const ph=document.getElementById('playHint');ph.dataset.i18n='touchHint';}
+// Styrekryss: én tommel styrer både venstre og høyre – kan gli mellom knappene
+(()=>{const pad=document.getElementById('dpad');const bl=pad.querySelector('[data-dir=left]'),br=pad.querySelector('[data-dir=right]');let pid=null;
+  const setDir=d=>{for(const k of['left','right']){const want=d===k;if(want&&!keys[k])pressed[k]=true;keys[k]=want;}bl.classList.toggle('on',d==='left');br.classList.toggle('on',d==='right');};
+  const dirAt=x=>{const r=pad.getBoundingClientRect();return x<r.left+r.width/2?'left':'right';};
+  pad.addEventListener('pointerdown',e=>{e.preventDefault();ac();pid=e.pointerId;try{pad.setPointerCapture(pid);}catch(_){}setDir(dirAt(e.clientX));});
+  pad.addEventListener('pointermove',e=>{if(e.pointerId===pid)setDir(dirAt(e.clientX));});
+  const end=e=>{if(e.pointerId!==pid)return;pid=null;setDir(null);};
+  pad.addEventListener('pointerup',end);pad.addEventListener('pointercancel',end);pad.addEventListener('lostpointercapture',end);
+  pad.addEventListener('contextmenu',e=>e.preventDefault());})();
+const playEl=document.getElementById('play');
+playEl.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('gesturestart',e=>{if(screen==='play')e.preventDefault();});
+playEl.addEventListener('touchmove',e=>{if(document.body.classList.contains('fs'))e.preventDefault();},{passive:false});
+// fsUser: null = automatisk (mobil på tvers), true/false = valgt med knappen
+let fsUser=null;
+const nativeFs=()=>document.fullscreenElement||document.webkitFullscreenElement;
+const autoFs=()=>COARSE&&innerWidth>innerHeight&&innerHeight<600;
+const FS_IN='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+const FS_OUT='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+function fsActive(){return !!nativeFs()||(fsUser==null?autoFs():fsUser);}
+function applyFs(){const on=fsActive();document.body.classList.toggle('fs',on&&screen==='play');
+  const lab=on?t('fsOff'):t('fsOn');const top=document.getElementById('fsTop'),pb=document.getElementById('fsBtn');
+  top.innerHTML=(on?FS_OUT:FS_IN)+'<span></span>';top.querySelector('span').textContent=lab;top.title=lab;
+  pb.innerHTML=on?FS_OUT:FS_IN;pb.title=lab;pb.setAttribute('aria-label',lab);}
+async function toggleFs(){ac();const on=fsActive();
+  if(!on){fsUser=true;const el=document.documentElement;const rq=el.requestFullscreen||el.webkitRequestFullscreen;
+    if(rq){try{await rq.call(el,{navigationUI:'hide'});}catch(e){}}
+    try{const so=window.screen.orientation;if(so&&so.lock)await so.lock('landscape');}catch(e){}}
+  else{fsUser=false;const ex=document.exitFullscreen||document.webkitExitFullscreen;if(nativeFs()&&ex){try{await ex.call(document);}catch(e){}}
+    try{const so=window.screen.orientation;so&&so.unlock&&so.unlock();}catch(e){}}
+  applyFs();}
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{if(!nativeFs()&&fsUser===true)fsUser=false;applyFs();}));
+addEventListener('resize',applyFs);addEventListener('orientationchange',()=>setTimeout(applyFs,250));
+document.getElementById('fsBtn').onclick=toggleFs;document.getElementById('fsTop').onclick=toggleFs;
+// Hold skjermen våken mens man spiller
+let wakeLock=null;
+async function syncWake(){const want=screen==='play'&&document.visibilityState==='visible';
+  try{if(want&&!wakeLock&&navigator.wakeLock){wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>{wakeLock=null;});}
+    else if(!want&&wakeLock){await wakeLock.release();wakeLock=null;}}catch(e){wakeLock=null;}}
+document.addEventListener('visibilitychange',syncWake);
 // Romkode krever WebRTC – inne i claude.ai er det sperret
 let RTC_OK=false;try{if(typeof RTCPeerConnection!=='undefined'){const pc=new RTCPeerConnection();pc.close();RTC_OK=true;}}catch(e){}
 if(!RTC_OK){document.getElementById('rtcBox').style.display='none';document.getElementById('noRtc').style.display='';const a=document.getElementById('pagesLink');a.href=PAGES_URL;a.textContent=PAGES_URL;}
-applyLang();muteBtn.textContent=muted?t('muted'):t('sound');
+applyLang();muteBtn.textContent=muted?t('muted'):t('sound');applyFs();
 requestAnimationFrame(frame);
 </script>
 </body>
