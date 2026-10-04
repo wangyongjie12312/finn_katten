@@ -102,8 +102,9 @@ footer{margin-top:18px;text-align:center;font-size:12px;color:var(--muted)}
           <p class="note">Alle som har denne siden åpen nå, kommer i samme lobby.</p>
           <div style="margin-top:10px"><button class="btn big red" id="roomBtn">Gå til lobbyen ▶</button></div>
         </div>
+        <p class="note err" id="roomNote" style="display:none">Du kom ikke inn i den felles lobbyen her. Den virker bare når du er logget inn på claude.ai og siden er delt direkte med deg (ikke via en offentlig lenke). Bruk romkode i stedet:</p>
         <div id="codeBox">
-          <p class="note">Én lager et rom og deler romkoden. De andre skriver inn koden. Ingen innlogging trengs.</p>
+          <p class="note"><b id="codeHead" style="display:none">Eller med romkode: </b>Én lager et rom og deler romkoden. De andre skriver inn koden. Ingen innlogging trengs.</p>
           <div class="row" style="margin-top:10px"><button class="btn red" id="createBtn">Lag nytt rom</button></div>
           <div class="row" style="margin-top:10px"><input type="text" class="code" id="codeIn" maxlength="4" placeholder="KODE"><button class="btn" id="joinBtn">Bli med</button></div>
           <div class="err" id="netErr"></div>
@@ -177,7 +178,7 @@ footer{margin-top:18px;text-align:center;font-size:12px;color:var(--muted)}
     <div class="actions"><button class="btn red" id="newBtn">Nytt spill</button><span class="note" id="awardWait"></span></div>
   </section>
 
-  <footer>Figurene er tegnet av Isabella 2026 · v0.6 · Blomstersangen er sunget av barn</footer>
+  <footer>Figurene er tegnet av Isabella 2026 · v0.6.1 · Blomstersangen er sunget av barn</footer>
 </div>
 
 <script>
@@ -1440,7 +1441,7 @@ document.querySelectorAll('.ctl').forEach(b=>{const k=b.dataset.k;
 const muteBtn=document.getElementById('muteBtn');muteBtn.onclick=()=>{muted=!muted;muteBtn.textContent=muted?'🔇 Lyd av':'🔊 Lyd';};
 
 // claude.ai: finnes «room», vises lobbyen for alle som har siden åpen
-(async()=>{try{if(window.claude&&claude.use){const r=await claude.use('room');if(r){roomNS=r;document.getElementById('roomBox').style.display='';document.getElementById('codeBox').style.display='none';}
+(async()=>{try{if(window.claude&&claude.use){const r=await claude.use('room');if(r){roomNS=r;document.getElementById('roomBox').style.display='';document.getElementById('codeHead').style.display='';}else{document.getElementById('roomNote').style.display='';}
   const u=await claude.use('user');if(u&&!nick.value){const me=await u.me();if(me&&me.name){nick.value=me.name.split(' ')[0].slice(0,16);}}}}catch(e){}})();
 requestAnimationFrame(frame);
 </script>
