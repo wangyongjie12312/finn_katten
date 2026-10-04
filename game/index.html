@@ -9,14 +9,14 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1d1813;--card:#2a221b;--ink:#f6eadc;--muted:#bba692;--line:#433629;--sel:#5a4a1e;--ok:#81C784;--warn:#EF9A9A;}}
 :root[data-theme="dark"]{--bg:#1d1813;--card:#2a221b;--ink:#f6eadc;--muted:#bba692;--line:#433629;--sel:#5a4a1e;--ok:#81C784;--warn:#EF9A9A;}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif}
+html,body{background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif}
 body{min-height:100vh;padding:16px;display:flex;justify-content:center}
 .wrap{width:100%;max-width:1100px}
 header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+header .hb{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 h1{font-size:clamp(22px,3.4vw,32px);line-height:1.15}
 h1 small{display:block;font-size:13px;font-weight:500;color:var(--muted);margin-top:3px}
 h2.step{font-size:18px;margin:16px 0 8px}
-h2.step small{font-size:13px;font-weight:500;color:var(--muted)}
 .btn{border:3px solid #3b2a20;background:#FFD54F;color:#3b2a20;border-radius:14px;padding:10px 18px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 0 #3b2a20;transition:transform .08s}
 .btn:active{transform:translateY(3px);box-shadow:0 1px 0 #3b2a20}
 .btn:disabled{opacity:.45;cursor:not-allowed}
@@ -31,9 +31,11 @@ section.on{display:block}
 @media (max-width:700px){.two{grid-template-columns:1fr}}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 input[type=text]{font:inherit;font-size:17px;padding:9px 12px;border:3px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);min-width:0}
-input.code{text-transform:uppercase;letter-spacing:4px;width:130px;font-weight:800}
+input.code{text-transform:uppercase;letter-spacing:4px;width:140px;font-weight:800}
+input[type=range]{width:180px;accent-color:#EF6C5A}
 .note{font-size:13px;color:var(--muted);line-height:1.6}
-.err{color:var(--warn);font-weight:700;font-size:14px}
+.err{color:var(--warn);font-weight:700;font-size:14px;line-height:1.5}
+.link{color:#1E88E5;font-weight:700;word-break:break-all}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
 .card{background:var(--card);border:3px solid var(--line);border-radius:16px;padding:6px 6px 8px;cursor:pointer;text-align:center;font-family:inherit;color:var(--ink);transition:transform .12s,border-color .12s}
 .card:hover{transform:translateY(-2px)}
@@ -62,18 +64,24 @@ input.code{text-transform:uppercase;letter-spacing:4px;width:130px;font-weight:8
 .stage{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:3px solid #3b2a20;background:#F3E2C7;box-shadow:0 8px 24px rgba(0,0,0,.18)}
 .stage canvas{width:100%;height:100%;display:block;touch-action:none}
 .ctrls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;user-select:none;-webkit-user-select:none}
-.pad{display:flex;gap:10px}
+.pad{display:flex;gap:10px;align-items:center}
 .ctl{width:64px;height:64px;border-radius:50%;border:3px solid #3b2a20;background:var(--card);color:var(--ink);font-size:26px;font-weight:800;touch-action:none;cursor:pointer;box-shadow:0 4px 0 #3b2a20;font-family:inherit}
 .ctl.big{width:76px;height:76px;background:#FFD54F;color:#3b2a20}
+.ctl.gear{width:48px;height:48px;font-size:22px}
 .ctl.on{transform:translateY(3px);box-shadow:0 1px 0 #3b2a20}
 .hint{font-size:13px;color:var(--muted);text-align:center;flex:1}
 .ranklist{list-style:none;display:grid;gap:6px}
 .ranklist li{display:flex;align-items:center;gap:12px;font-size:16px;padding:6px 10px;border-radius:10px;background:var(--bg)}
-.ranklist .pl{font-weight:800;min-width:84px}
+.ranklist .pl{font-weight:800;min-width:96px}
 .ranklist .nm{flex:1;font-weight:700}
 .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0 8px}
 .rules{font-size:14px;line-height:1.75}
-.rules kbd{display:inline-block;border:2px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:0 6px;font-size:12px;font-family:inherit;background:var(--bg)}
+.modal{position:fixed;inset:0;background:rgba(30,18,10,.55);display:none;align-items:flex-start;justify-content:center;padding:24px 12px;z-index:50;overflow:auto}
+.modal.on{display:flex}
+.mpanel{background:var(--card);color:var(--ink);border:3px solid #3b2a20;border-radius:20px;padding:18px 20px;width:100%;max-width:560px;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.mpanel h2{font-size:22px;margin-bottom:8px}
+.mpanel h3{font-size:15px;margin:14px 0 4px;color:var(--muted)}
+.confirm{background:var(--bg);border:2px dashed #EF6C5A;border-radius:14px;padding:12px;margin-top:12px}
 footer{margin-top:18px;text-align:center;font-size:12px;color:var(--muted)}
 @media (max-width:600px){body{padding:10px}.ctl{width:58px;height:58px}.ctl.big{width:68px;height:68px}.hint{display:none}}
 </style>
@@ -81,77 +89,72 @@ footer{margin-top:18px;text-align:center;font-size:12px;color:var(--muted)}
 <body>
 <div class="wrap">
   <header>
-    <h1>Finn kattene 🐱🌺<small>Gjemsel med 7 katter og en valp · spill alene eller sammen på nett</small></h1>
-    <button class="btn ghost" id="muteBtn">🔊 Lyd</button>
+    <h1>Finn kattene 🐱🌺<small data-i18n="sub"></small></h1>
+    <div class="hb"><button class="btn ghost" id="setBtn" data-i18n="settings"></button><button class="btn ghost" id="muteBtn"></button></div>
   </header>
 
   <!-- START -->
   <section id="start" class="on">
     <div class="panel">
-      <div class="row"><b>Ditt navn:</b><input type="text" id="nick" maxlength="16" placeholder="Skriv navnet ditt"></div>
+      <div class="row"><b data-i18n="yourName"></b><input type="text" id="nick" maxlength="16" data-i18n-ph="namePh"></div>
     </div>
     <div class="two">
       <div class="panel">
-        <h2 class="step" style="margin-top:0">🎮 Spill alene</h2>
-        <p class="note">Du og robotkatter. Du velger selv om du vil gjemme deg eller lete.</p>
-        <div style="margin-top:10px"><button class="btn big" id="soloBtn">Spill alene ▶</button></div>
+        <h2 class="step" style="margin-top:0" data-i18n="soloH"></h2>
+        <p class="note" data-i18n="soloNote"></p>
+        <div style="margin-top:10px"><button class="btn big" id="soloBtn" data-i18n="soloBtn"></button></div>
       </div>
       <div class="panel">
-        <h2 class="step" style="margin-top:0">🌐 Spill sammen på nett</h2>
+        <h2 class="step" style="margin-top:0" data-i18n="onlineH"></h2>
         <div id="roomBox" style="display:none">
-          <p class="note">Alle som har denne siden åpen nå, kommer i samme lobby.</p>
-          <div style="margin-top:10px"><button class="btn big red" id="roomBtn">Gå til lobbyen ▶</button></div>
+          <p class="note" data-i18n="roomNoteOk"></p>
+          <div style="margin-top:10px"><button class="btn big red" id="roomBtn" data-i18n="roomBtn"></button></div>
         </div>
-        <p class="note err" id="roomNote" style="display:none">Du kom ikke inn i den felles lobbyen her. Den virker bare når du er logget inn på claude.ai og siden er delt direkte med deg (ikke via en offentlig lenke). Bruk romkode i stedet:</p>
-        <div id="codeBox">
-          <p class="note"><b id="codeHead" style="display:none">Eller med romkode: </b>Én lager et rom og deler romkoden. De andre skriver inn koden. Ingen innlogging trengs.</p>
-          <div class="row" style="margin-top:10px"><button class="btn red" id="createBtn">Lag nytt rom</button></div>
-          <div class="row" style="margin-top:10px"><input type="text" class="code" id="codeIn" maxlength="4" placeholder="KODE"><button class="btn" id="joinBtn">Bli med</button></div>
+        <p class="err" id="roomNote" style="display:none" data-i18n="roomNoteBad"></p>
+        <div id="codeBox" style="margin-top:10px">
+          <p class="note"><b data-i18n="codeHead"></b> <span data-i18n="codeNote"></span></p>
+          <div id="rtcBox">
+            <div class="row" style="margin-top:10px"><button class="btn red" id="createBtn" data-i18n="createBtn"></button></div>
+            <div class="row" style="margin-top:10px"><input type="text" class="code" id="codeIn" maxlength="4" data-i18n-ph="codePh"><button class="btn" id="joinBtn" data-i18n="joinBtn"></button></div>
+          </div>
+          <p class="err" id="noRtc" style="display:none"><span data-i18n="noRtc"></span><br><a class="link" id="pagesLink" target="_blank" rel="noopener"></a></p>
           <div class="err" id="netErr"></div>
         </div>
-        <div style="margin-top:10px"><button class="btn ghost" id="localBtn">Test med flere faner på denne maskinen</button></div>
+        <div style="margin-top:10px"><button class="btn ghost" id="localBtn" data-i18n="localBtn"></button></div>
       </div>
     </div>
-    <div class="panel rules">
-      <b>Slik spiller dere:</b> Velg en katt og om du vil <b>gjemme deg 🙈</b>, <b>lete 🔍</b> eller bare <b>se på 👀</b>.
-      Det må være <b>like mange</b> som gjemmer seg og leter – mangler det noen, kan verten legge til <b>robotkatter</b>. Er dere et oddetall, kan én se på.<br>
-      Alle starter med <b>3 små røde blomster 🌺</b> rundt halsen og et <b>tilfeldig sted</b> i huset. De som leter, lukker øynene i 10 sekunder.
-      Gå til et møbel og trykk 🔍 for å <b>gjemme deg</b> der (trykk igjen for å komme ut) – eller for å <b>lete</b> der.
-      Blir du funnet, gir du én blomst til den som fant deg, og synger blomstersangen 🎤.
-      Pass deg for <b>valpene 🐶</b> (verten velger 0–5)! Kommer du borti en valp, mister du en blomst. Av og til dukker det opp en <b>blomsterfisk 🐟</b> et tilfeldig sted – den som rekker den først, får en ekstra blomst. Hver katt har sitt eget «mjau». Har du ingen blomster igjen, er du ute.
-      Etter siste runde deles det ut <b>gull, sølv og bronse</b> 🏆<br>
-      <b>Tastatur:</b> <kbd>←</kbd><kbd>→</kbd> gå　<kbd>↑</kbd> hopp / opp trappa　<kbd>mellomrom</kbd> eller <kbd>↓</kbd> gjem deg / let / ned trappa
-    </div>
+    <div class="panel rules" data-i18n-html="rules"></div>
   </section>
 
   <!-- LOBBY -->
   <section id="lobby">
-    <div class="panel"><div class="row" style="justify-content:space-between"><div><b id="lobMode"></b><div class="note" id="lobSub"></div></div><button class="btn ghost" id="leaveBtn">Forlat</button></div></div>
-    <div id="noHost" class="panel" style="display:none"><p class="status">Ingen har laget et spill ennå.</p><button class="btn red" id="makeHostBtn">Lag spill (bli vert)</button></div>
+    <div class="panel"><div class="row" style="justify-content:space-between"><div><b id="lobMode"></b><div class="note" id="lobSub"></div></div><button class="btn ghost" id="leaveBtn" data-i18n="leave"></button></div></div>
+    <div id="noHost" class="panel" style="display:none"><p class="status" data-i18n="noHost"></p><button class="btn red" id="makeHostBtn" data-i18n="makeHost"></button></div>
     <div id="lobMain">
       <div class="panel" id="lastBox" style="display:none"></div>
-      <h2 class="step">1. Velg katten din</h2>
+      <h2 class="step" data-i18n="step1"></h2>
       <div class="grid" id="catGrid"></div>
-      <h2 class="step">2. Hva vil du gjøre?</h2>
+      <div class="row" style="margin-top:10px"><b data-i18n="catNameLbl"></b><input type="text" id="catName" maxlength="12" data-i18n-ph="catNamePh"></div>
+      <h2 class="step" data-i18n="step2"></h2>
       <div class="roles" id="roleRow">
-        <button class="role" data-r="h">🙈 Gjemme meg</button>
-        <button class="role" data-r="s">🔍 Lete</button>
-        <button class="role" data-r="o">👀 Se på</button>
+        <button class="role" data-r="h" data-i18n="roleH"></button>
+        <button class="role" data-r="s" data-i18n="roleS"></button>
+        <button class="role" data-r="o" data-i18n="roleO"></button>
       </div>
       <div class="two">
-        <div class="panel"><h2 class="step" style="margin-top:0">Spillere</h2><ul class="plist" id="plist"></ul><div class="status" id="teamStatus"></div></div>
+        <div class="panel"><h2 class="step" style="margin-top:0" data-i18n="players"></h2><ul class="plist" id="plist"></ul><div class="status" id="teamStatus"></div></div>
         <div class="panel" id="hostPanel">
-          <h2 class="step" style="margin-top:0">Innstillinger <small id="hostOnly"></small></h2>
-          <div class="setting">🤖 Roboter: <button class="btn small" id="botH">+ gjemmer seg</button><button class="btn small" id="botS">+ leter</button><button class="btn small" id="botBal">⚖ Jevn ut</button></div>
-          <div class="setting" id="roundSet">🔁 Runder:</div>
-          <div class="setting" id="minSet">⏱ Letetid:</div>
-          <div class="setting" id="hintSet">💡 Hint fra gjemte katter:</div>
-          <div class="setting" id="dogSet">🐶 Valper:</div>
-          <div class="setting" id="fishSet">🐟 Blomsterfisker:</div>
-          <div style="margin-top:12px"><button class="btn red big" id="startRoundBtn">Start runden ▶</button></div>
+          <h2 class="step" style="margin-top:0"><span data-i18n="settingsH"></span> <small id="hostOnly" class="note"></small></h2>
+          <div class="setting"><span data-i18n="bots"></span> <button class="btn small" id="botH" data-i18n="botH"></button><button class="btn small" id="botS" data-i18n="botS"></button><button class="btn small" id="botBal" data-i18n="botBal"></button></div>
+          <div class="setting" id="roundSet"></div>
+          <div class="setting" id="minSet"></div>
+          <div class="setting" id="hintSet"></div>
+          <div class="setting" id="dogSet"></div>
+          <div class="setting" id="fishSet"></div>
+          <div style="margin-top:12px"><button class="btn red big" id="startRoundBtn"></button></div>
         </div>
       </div>
-      <div class="panel" id="standBox" style="display:none"><h2 class="step" style="margin-top:0">🌺 Stillingen</h2><div class="stand" id="stand"></div></div>
+      <div class="panel" id="standBox" style="display:none"><h2 class="step" style="margin-top:0" data-i18n="standings"></h2><div class="stand" id="stand"></div></div>
     </div>
   </section>
 
@@ -160,13 +163,14 @@ footer{margin-top:18px;text-align:center;font-size:12px;color:var(--muted)}
     <div class="stage"><canvas id="game"></canvas></div>
     <div class="ctrls">
       <div class="pad">
-        <button class="ctl" data-k="left" aria-label="Venstre">◀</button>
-        <button class="ctl" data-k="right" aria-label="Høyre">▶</button>
+        <button class="ctl" data-k="left" aria-label="←">◀</button>
+        <button class="ctl" data-k="right" aria-label="→">▶</button>
       </div>
-      <div class="hint" id="playHint">← → gå · ↑ hopp / opp · mellomrom / ↓ gjem deg / let / ned</div>
+      <div class="hint" id="playHint" data-i18n="ctrlHint"></div>
       <div class="pad">
-        <button class="ctl" data-k="jump" aria-label="Hopp">⤒</button>
-        <button class="ctl big" data-k="search" aria-label="Gjem / let">🔍</button>
+        <button class="ctl gear" id="gearBtn" aria-label="⚙">⚙</button>
+        <button class="ctl" data-k="jump" aria-label="↑">⤒</button>
+        <button class="ctl big" data-k="search" aria-label="🔍">🔍</button>
       </div>
     </div>
   </section>
@@ -174,11 +178,36 @@ footer{margin-top:18px;text-align:center;font-size:12px;color:var(--muted)}
   <!-- PREMIEUTDELING -->
   <section id="awards">
     <div class="stage"><canvas id="award"></canvas></div>
-    <div class="panel"><h2 class="step" style="margin-top:0">🏆 Resultatliste</h2><ol class="ranklist" id="rankList"></ol></div>
-    <div class="actions"><button class="btn red" id="newBtn">Nytt spill</button><span class="note" id="awardWait"></span></div>
+    <div class="panel"><h2 class="step" style="margin-top:0" data-i18n="results"></h2><ol class="ranklist" id="rankList"></ol></div>
+    <div class="actions"><button class="btn red" id="newBtn" data-i18n="newGame"></button><span class="note" id="awardWait"></span></div>
   </section>
 
-  <footer>Figurene er tegnet av Isabella 2026 · v0.6.1 · Blomstersangen er sunget av barn</footer>
+  <footer data-i18n="footer"></footer>
+</div>
+
+<!-- INNSTILLINGER -->
+<div class="modal" id="setModal">
+  <div class="mpanel">
+    <h2 data-i18n="setTitle"></h2>
+    <div class="setting" id="langSet"></div>
+    <div class="setting"><span data-i18n="sfx"></span><input type="range" id="sfxR" min="0" max="100"></div>
+    <div class="setting"><span data-i18n="song"></span><input type="range" id="voxR" min="0" max="100"></div>
+    <div class="setting" id="setCatRow"><span data-i18n="myCatName"></span><input type="text" id="setCatName" maxlength="12" data-i18n-ph="catNamePh"></div>
+    <div id="hostLive" style="display:none">
+      <h3 data-i18n="hostLive"></h3>
+      <div class="setting" id="liveHint"></div>
+      <div class="setting" id="liveDogs"></div>
+      <div class="setting" id="livePause"><button class="btn small" id="pauseBtn"></button></div>
+    </div>
+    <div class="actions">
+      <button class="btn red" id="exitBtn" data-i18n="exitGame"></button>
+      <button class="btn" id="closeSet" data-i18n="close"></button>
+    </div>
+    <div class="confirm" id="exitBox" style="display:none">
+      <p data-i18n="exitConfirm"></p><p class="err" id="exitHost" style="display:none" data-i18n="exitHostWarn"></p>
+      <div class="actions"><button class="btn red" id="exitYes" data-i18n="yes"></button><button class="btn ghost" id="exitNo" data-i18n="no"></button></div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -255,6 +284,131 @@ const PLATS=[
  {x1:1818,x2:2022,y:1450},{x1:1818,x2:2022,y:1370},{x1:1818,x2:2022,y:1290},
  {x1:2090,x2:2220,y:1460},{x1:2110,x2:2210,y:1385},{x1:2225,x2:2295,y:1490},{x1:2400,x2:2630,y:1446},
 ];
+
+
+/* ================= Språk / 语言 / Language ================= */
+const PAGES_URL='https://wangyongjie12312.github.io/finn_katten/game/';
+let LANG=(()=>{try{const v=JSON.parse(localStorage.getItem('fk2_lang'));if(['nb','zh','en'].includes(v))return v;}catch(e){}return 'nb';})();
+const TXT={
+nb:{
+ sub:'Gjemsel med 7 katter, valper og blomsterfisker · spill alene eller sammen på nett',sound:'🔊 Lyd',muted:'🔇 Lyd av',settings:'⚙ Innstillinger',
+ yourName:'Ditt navn:',namePh:'Skriv navnet ditt',catNameLbl:'Kattens navn:',catNamePh:'Valgfritt',
+ soloH:'🎮 Spill alene',soloNote:'Du og robotkatter. Du velger selv om du vil gjemme deg eller lete.',soloBtn:'Spill alene ▶',
+ onlineH:'🌐 Spill sammen på nett',roomNoteOk:'Alle som har denne siden åpen nå, kommer i samme lobby.',roomBtn:'Gå til lobbyen ▶',
+ roomNoteBad:'Du kom ikke inn i den felles lobbyen her. Den virker bare når du er logget inn på claude.ai og siden er delt direkte med deg (ikke via en offentlig lenke).',
+ codeHead:'Med romkode:',codeNote:'Én lager et rom og deler romkoden. De andre skriver inn koden. Ingen innlogging trengs.',createBtn:'Lag nytt rom',codePh:'KODE',joinBtn:'Bli med',
+ noRtc:'Romkode virker ikke inne i claude.ai (her er direkte tilkobling sperret). Åpne spillet på denne adressen i stedet:',localBtn:'Test med flere faner på denne maskinen',
+ rules:'<b>Slik spiller dere:</b> Velg en katt (du kan gi den et eget navn) og om du vil <b>gjemme deg 🙈</b>, <b>lete 🔍</b> eller bare <b>se på 👀</b>. Det må være <b>like mange</b> som gjemmer seg og leter – mangler det noen, kan verten legge til <b>robotkatter</b>.<br>Alle starter med <b>3 små røde blomster 🌺</b> og et <b>tilfeldig sted</b> i huset. De som leter, lukker øynene i 10 sekunder. Gå til et møbel og trykk 🔍 for å <b>gjemme deg</b> der (trykk igjen for å komme ut) – eller for å <b>lete</b> der. Blir du funnet, gir du én blomst til den som fant deg, og synger blomstersangen 🎤.<br>Pass deg for <b>valpene 🐶</b> – kommer du borti en, mister du en blomst. En <b>blomsterfisk 🐟</b> gir en ekstra blomst. Har du ingen blomster igjen, er du ute. Etter siste runde deles det ut <b>gull, sølv og bronse</b> 🏆<br><b>Tastatur:</b> ← → gå · ↑ hopp / opp trappa · mellomrom eller ↓ gjem deg / let / ned trappa · Esc innstillinger',
+ leave:'Forlat',noHost:'Ingen har laget et spill ennå.',makeHost:'Lag spill (bli vert)',step1:'1. Velg katten din',step2:'2. Hva vil du gjøre?',
+ roleH:'🙈 Gjemme meg',roleS:'🔍 Lete',roleO:'👀 Se på',players:'Spillere',settingsH:'Innstillinger',bots:'🤖 Roboter:',botH:'+ gjemmer seg',botS:'+ leter',botBal:'⚖ Jevn ut',
+ rounds:'🔁 Runder: ',mins:'⏱ Letetid: ',minU:'{0} min',hints:'💡 Hint fra gjemte katter: ',on:'På',off:'Av',dogs:'🐶 Valper: ',fish:'🐟 Blomsterfisker: ',
+ startRound:'Start runde {0} av {1} ▶',waitHost:'Venter på at verten starter …',standings:'🌺 Stillingen',
+ ctrlHint:'← → gå · ↑ hopp / opp · mellomrom / ↓ gjem deg / let / ned · Esc ⚙',results:'🏆 Resultatliste',newGame:'Nytt spill',
+ footer:'Figurene er tegnet av Isabella 2026 · v0.7 · Blomstersangen er sunget av barn',
+ errLib:'Kunne ikke laste nettverksbiblioteket',errConn:'Fikk ikke kontakt',revealOk:'Jeg gjemte meg godt! 😼',noSpot:'Ingen gjemmesteder her',waitTime:'Vent til tiden starter!',ouch:'Au!',
+ startSeek:'Lukk øynene og tell til 10 …',startHide:'Gjem deg! Du har 10 sekunder 🙈',go:'Klar eller ei – nå letes det! 🔍',empty:'Tomt {0}!',
+ found:'Fant {0}! {0} gir {1} en blomst 🌺',tagged:'Tatt!',dogTook:'Valpen tok en blomst! 🐶',woof:'Voff!',woof2:'Voff voff!',
+ fishSpawn:'En blomsterfisk har dukket opp! 🐟🌺',fishGot:'{0} fant en blomsterfisk! +1 🌺',busy:'Opptatt! Noen er der allerede',sneak:'Psst… bytter plass',
+ allFound:'Alle er funnet! 🎉',timeUp:'Tiden er ute! Se hvor alle gjemte seg',goUp:'Trykk ↑ for å gå opp',goDown:'Trykk ↓ for å gå ned',
+ promptHide:'🔍 Gjem deg {0}',promptSeek:'🔍 Let {0}',hiddenNow:'🤫 Du er gjemt · 🔍 for å komme ut',countOverlay:'Du lukker øynene og teller … de andre gjemmer seg!',
+ youSeek:'Du leter',youHide:'Du gjemmer deg',youFound:'Du er funnet',watching:'👀 Ser på {0} (← →)',roundX:'Runde {0}',sec:'{0} sek',
+ paused:'⏸ Pause',pausedSub:'Verten har satt spillet på pause',
+ modeSolo:'🎮 Alene med roboter',modeRoom:'🌐 Lobby for alle som har siden åpen',modePeer:'🌐 Romkode: {0}',modeLocal:'🧪 Test i flere faner',
+ subSolo:'Du er verten. Legg til roboter og velg om du vil gjemme deg eller lete.',subRoom:'Alle som åpner denne siden nå, ser den samme lobbyen.',subPeer:'Del koden med vennene dine – de trykker «Bli med» og skriver den inn.',subLocal:'Åpne siden i flere faner for å teste nettspillet.',
+ cOut:'Ute 😿',cYou:'Deg',cRobot:'🤖 Robot',cFree:'Ledig',player:'Spiller',robot:'Robot',meTag:' (deg)',pickCat:'(velg katt) · ',
+ rlH:'🙈 gjemmer seg',rlS:'🔍 leter',rlO:'👀 ser på',removeBot:'Fjern robot',
+ team:'🙈 {0} gjemmer seg · 🔍 {1} leter — ',teamOk:'like lag, klare! ✔',teamNone:'ingen er valgt ennå',teamBad:'lagene må være like store',hostOnly:'(bare verten {0} kan endre)',
+ lastRound:'Runde {0} er ferdig',resSeek:'🔍 {0} lette',resFound:'🙈 {0} ble funnet av {1} etter {2} og ga en blomst 🌺',resHidden:'🏆 {0} ble ikke funnet – gjemte seg {1}',hidWell:'godt',outTag:' (ute)',
+ place:'{0}. plass',waitNew:'Venter på at verten starter et nytt spill …',awardsTitle:'Premieutdeling 🏆',congrats:'Gratulerer, {0}!',and:' og ',
+ creating:'Lager rom …',createFail:'Kunne ikke lage rom: ',need4:'Skriv inn en kode med 4 bokstaver',connecting:'Kobler til …',notFound:'Fant ikke rommet. Sjekk koden og prøv igjen.',
+ setTitle:'⚙ Innstillinger',lang:'🌐 Språk:',sfx:'🔊 Lydeffekter:',song:'🎤 Sang:',myCatName:'🐱 Navnet på katten din:',hostLive:'For verten – virker med en gang',
+ pause:'⏸ Pause',resume:'▶ Fortsett',exitGame:'🚪 Avslutt spillet',exitConfirm:'Vil du avslutte? Du går tilbake til startsiden.',exitHostWarn:'Du er verten – spillet stopper for alle.',yes:'Ja, avslutt',no:'Nei',close:'Lukk',
+ signBed:'Soverom 🛏',signBath:'Bad 🛁',signKids:'Barnerom 🧸',signLiving:'Stue 🛋',signKitchen:'Kjøkken 🍳',signCellar:'Kjeller 🕯',signGarden:'Hage 🌳',
+ lblFamily:'Familiebilde',lblDrawn:'Tegnet av Isabella',lblWoof:'VOFF',lblTree:'Trehytta',lblToys:'LEKER',lblFish:'FISK',lblJul:'JUL',lblHot:'VARMT',lblBike:'SYKKEL',
+ meow:['Mjau!','Mjaaau…','Mi-mi!','Mjiii~','Mrrrau!','Mjååu~','Mjau…?']},
+zh:{
+ sub:'7只猫的捉迷藏，还有小狗和带花的小鱼 · 单人或在线一起玩',sound:'🔊 声音',muted:'🔇 静音',settings:'⚙ 设置',
+ yourName:'你的名字：',namePh:'输入你的名字',catNameLbl:'猫的名字：',catNamePh:'可不填',
+ soloH:'🎮 单人游戏',soloNote:'你和机器人猫一起玩，可以自己选择躲还是找。',soloBtn:'开始单人游戏 ▶',
+ onlineH:'🌐 在线一起玩',roomNoteOk:'现在打开这个页面的人都会进入同一个大厅。',roomBtn:'进入大厅 ▶',
+ roomNoteBad:'你没能进入这里的共享大厅。只有登录 claude.ai、并且页面是直接分享给你的（不是公开链接）才能进。',
+ codeHead:'用房间码：',codeNote:'一个人建房间并把房间码发给大家，其他人输入房间码加入。不用登录。',createBtn:'建新房间',codePh:'房间码',joinBtn:'加入',
+ noRtc:'在 claude.ai 页面里不能用房间码（这里禁止直接连接）。请改用这个网址打开游戏：',localBtn:'在本机多开标签页测试',
+ rules:'<b>玩法：</b>选一只猫（可以给它起名字），再选 <b>躲 🙈</b>、<b>找 🔍</b> 或 <b>观看 👀</b>。躲和找的人数必须<b>一样多</b>，人不够主机可以加<b>机器人猫</b>。<br>每只猫开局有 <b>3 朵小红花 🌺</b>，出生在房子里<b>随机的位置</b>。找的猫先闭眼数 10 秒。走到家具旁按 🔍 就能<b>藏进去</b>（再按一次出来），或者在那里<b>找</b>。被找到就送一朵花给找到你的猫，并唱小红花之歌 🎤。<br>小心<b>小狗 🐶</b>——碰到就会丢一朵花。碰到<b>带花的小鱼 🐟</b> 能多得一朵。花送完就出局。最后一轮结束后颁发<b>金、银、铜</b>奖 🏆<br><b>键盘：</b>← → 走 · ↑ 跳 / 上楼 · 空格或 ↓ 躲 / 找 / 下楼 · Esc 设置',
+ leave:'离开',noHost:'还没有人建游戏。',makeHost:'建游戏（当主机）',step1:'1. 选择你的猫',step2:'2. 你想做什么？',
+ roleH:'🙈 我来躲',roleS:'🔍 我来找',roleO:'👀 观看',players:'玩家',settingsH:'设置',bots:'🤖 机器人：',botH:'+ 躲的',botS:'+ 找的',botBal:'⚖ 补齐',
+ rounds:'🔁 轮数：',mins:'⏱ 寻找时间：',minU:'{0} 分钟',hints:'💡 藏着的猫给提示：',on:'开',off:'关',dogs:'🐶 小狗：',fish:'🐟 带花小鱼：',
+ startRound:'开始第 {0} 轮（共 {1} 轮）▶',waitHost:'等待主机开始……',standings:'🌺 当前排名',
+ ctrlHint:'← → 走 · ↑ 跳 / 上楼 · 空格 / ↓ 躲 / 找 / 下楼 · Esc ⚙',results:'🏆 成绩表',newGame:'新游戏',
+ footer:'角色原画：Isabella 2026 · v0.7 · 小红花之歌由孩子们演唱',
+ errLib:'无法加载联网组件',errConn:'连接不上',revealOk:'我藏得好吧！😼',noSpot:'这里没有能藏的地方',waitTime:'等时间开始再找！',ouch:'哎哟！',
+ startSeek:'闭上眼睛数到 10……',startHide:'快躲起来！你有 10 秒 🙈',go:'准备好了吗——开始找啦！🔍',empty:'{0}没有猫！',
+ found:'找到 {0} 啦！{0} 送给 {1} 一朵小红花 🌺',tagged:'抓到了！',dogTook:'小狗抢走了一朵花！🐶',woof:'汪！',woof2:'汪汪！',
+ fishSpawn:'出现了一条带花的小鱼！🐟🌺',fishGot:'{0} 找到了带花小鱼！+1 🌺',busy:'有猫了！那里已经有人藏',sneak:'嘘……换个地方',
+ allFound:'全部找到啦！🎉',timeUp:'时间到！看看大家都藏在哪儿',goUp:'按 ↑ 上楼',goDown:'按 ↓ 下楼',
+ promptHide:'🔍 藏到{0}',promptSeek:'🔍 找找{0}',hiddenNow:'🤫 你藏好了 · 按 🔍 出来',countOverlay:'你闭上眼睛数数……其他猫在躲！',
+ youSeek:'你在找',youHide:'你在躲',youFound:'你被找到了',watching:'👀 正在看 {0}（← →）',roundX:'第 {0} 轮',sec:'{0} 秒',
+ paused:'⏸ 暂停中',pausedSub:'主机暂停了游戏',
+ modeSolo:'🎮 和机器人一起玩',modeRoom:'🌐 打开这个页面的人的大厅',modePeer:'🌐 房间码：{0}',modeLocal:'🧪 多标签页测试',
+ subSolo:'你是主机。可以添加机器人，并选择躲或找。',subRoom:'现在打开这个页面的人都看到同一个大厅。',subPeer:'把房间码发给朋友——他们点「加入」并输入房间码。',subLocal:'在多个标签页里打开这个页面来测试联机。',
+ cOut:'出局 😿',cYou:'你',cRobot:'🤖 机器人',cFree:'空闲',player:'玩家',robot:'机器人',meTag:'（你）',pickCat:'（选猫）· ',
+ rlH:'🙈 躲',rlS:'🔍 找',rlO:'👀 观看',removeBot:'移除机器人',
+ team:'🙈 躲：{0} · 🔍 找：{1} —— ',teamOk:'人数相等，可以开始！✔',teamNone:'还没人选',teamBad:'两边人数必须一样',hostOnly:'（只有主机 {0} 能改）',
+ lastRound:'第 {0} 轮结束',resSeek:'🔍 {0} 负责找',resFound:'🙈 {0} 在 {2} 时被 {1} 找到，送出一朵花 🌺',resHidden:'🏆 {0} 没被找到——藏在{1}',hidWell:'很好的地方',outTag:'（出局）',
+ place:'第 {0} 名',waitNew:'等待主机开始新游戏……',awardsTitle:'颁奖典礼 🏆',congrats:'恭喜 {0}！',and:' 和 ',
+ creating:'正在建房间……',createFail:'建房间失败：',need4:'请输入 4 个字母的房间码',connecting:'正在连接……',notFound:'找不到这个房间，请检查房间码再试。',
+ setTitle:'⚙ 设置',lang:'🌐 语言：',sfx:'🔊 音效：',song:'🎤 歌声：',myCatName:'🐱 我的猫的名字：',hostLive:'主机设置——立即生效',
+ pause:'⏸ 暂停',resume:'▶ 继续',exitGame:'🚪 退出游戏',exitConfirm:'确定要退出吗？会回到开始页面。',exitHostWarn:'你是主机——退出后所有人的游戏都会结束。',yes:'确定退出',no:'取消',close:'关闭',
+ signBed:'卧室 🛏',signBath:'浴室 🛁',signKids:'儿童房 🧸',signLiving:'客厅 🛋',signKitchen:'厨房 🍳',signCellar:'地下室 🕯',signGarden:'花园 🌳',
+ lblFamily:'全家福',lblDrawn:'Isabella 画的',lblWoof:'汪',lblTree:'树屋',lblToys:'玩具',lblFish:'鱼',lblJul:'圣诞',lblHot:'热水',lblBike:'自行车',
+ meow:['喵！','喵呜……','咪咪！','喵~','嗷呜！','喵呜~','喵……？']},
+en:{
+ sub:'Hide-and-seek with 7 cats, puppies and flower fish · play alone or together online',sound:'🔊 Sound',muted:'🔇 Muted',settings:'⚙ Settings',
+ yourName:'Your name:',namePh:'Type your name',catNameLbl:"Cat's name:",catNamePh:'Optional',
+ soloH:'🎮 Play alone',soloNote:'You and robot cats. Choose whether you want to hide or seek.',soloBtn:'Play alone ▶',
+ onlineH:'🌐 Play together online',roomNoteOk:'Everyone who has this page open right now joins the same lobby.',roomBtn:'Go to the lobby ▶',
+ roomNoteBad:"You couldn't join the shared lobby here. It only works when you're signed in to claude.ai and the page was shared with you directly (not via a public link).",
+ codeHead:'With a room code:',codeNote:'One person creates a room and shares the code. The others type it in. No login needed.',createBtn:'Create room',codePh:'CODE',joinBtn:'Join',
+ noRtc:"Room codes don't work inside claude.ai (direct connections are blocked here). Open the game at this address instead:",localBtn:'Test with several tabs on this computer',
+ rules:'<b>How to play:</b> Pick a cat (you can give it your own name) and choose to <b>hide 🙈</b>, <b>seek 🔍</b> or just <b>watch 👀</b>. There must be <b>as many</b> hiders as seekers – the host can add <b>robot cats</b> to fill up.<br>Everyone starts with <b>3 little red flowers 🌺</b> at a <b>random spot</b> in the house. Seekers close their eyes for 10 seconds. Walk to a piece of furniture and press 🔍 to <b>hide</b> there (press again to come out) – or to <b>search</b> it. If you are found, you give one flower to the cat that found you and sing the flower song 🎤.<br>Watch out for the <b>puppies 🐶</b> – bump into one and you lose a flower. A <b>flower fish 🐟</b> gives an extra flower. With no flowers left, you are out. After the last round there are <b>gold, silver and bronze</b> medals 🏆<br><b>Keyboard:</b> ← → walk · ↑ jump / up the stairs · space or ↓ hide / search / down the stairs · Esc settings',
+ leave:'Leave',noHost:'Nobody has created a game yet.',makeHost:'Create game (be the host)',step1:'1. Pick your cat',step2:'2. What do you want to do?',
+ roleH:'🙈 Hide',roleS:'🔍 Seek',roleO:'👀 Watch',players:'Players',settingsH:'Settings',bots:'🤖 Robots:',botH:'+ hider',botS:'+ seeker',botBal:'⚖ Balance',
+ rounds:'🔁 Rounds: ',mins:'⏱ Seek time: ',minU:'{0} min',hints:'💡 Hints from hidden cats: ',on:'On',off:'Off',dogs:'🐶 Puppies: ',fish:'🐟 Flower fish: ',
+ startRound:'Start round {0} of {1} ▶',waitHost:'Waiting for the host to start …',standings:'🌺 Standings',
+ ctrlHint:'← → walk · ↑ jump / up · space / ↓ hide / search / down · Esc ⚙',results:'🏆 Results',newGame:'New game',
+ footer:'Characters drawn by Isabella 2026 · v0.7 · The flower song is sung by children',
+ errLib:'Could not load the network library',errConn:'Could not connect',revealOk:'I hid well! 😼',noSpot:'No hiding place here',waitTime:'Wait until the time starts!',ouch:'Ouch!',
+ startSeek:'Close your eyes and count to 10 …',startHide:'Hide! You have 10 seconds 🙈',go:'Ready or not – here we come! 🔍',empty:'Nobody {0}!',
+ found:'Found {0}! {0} gives {1} a flower 🌺',tagged:'Caught!',dogTook:'The puppy took a flower! 🐶',woof:'Woof!',woof2:'Woof woof!',
+ fishSpawn:'A flower fish has appeared! 🐟🌺',fishGot:'{0} found a flower fish! +1 🌺',busy:'Taken! Someone is already there',sneak:'Psst… switching spots',
+ allFound:'Everyone is found! 🎉',timeUp:'Time is up! See where everyone hid',goUp:'Press ↑ to go up',goDown:'Press ↓ to go down',
+ promptHide:'🔍 Hide {0}',promptSeek:'🔍 Search {0}',hiddenNow:'🤫 You are hidden · 🔍 to come out',countOverlay:'You close your eyes and count … the others are hiding!',
+ youSeek:'You are seeking',youHide:'You are hiding',youFound:'You were found',watching:'👀 Watching {0} (← →)',roundX:'Round {0}',sec:'{0} s',
+ paused:'⏸ Paused',pausedSub:'The host paused the game',
+ modeSolo:'🎮 Alone with robots',modeRoom:'🌐 Lobby for everyone with this page open',modePeer:'🌐 Room code: {0}',modeLocal:'🧪 Test with several tabs',
+ subSolo:'You are the host. Add robots and choose to hide or seek.',subRoom:'Everyone who opens this page now sees the same lobby.',subPeer:'Share the code with your friends – they press “Join” and type it in.',subLocal:'Open the page in several tabs to test online play.',
+ cOut:'Out 😿',cYou:'You',cRobot:'🤖 Robot',cFree:'Free',player:'Player',robot:'Robot',meTag:' (you)',pickCat:'(pick a cat) · ',
+ rlH:'🙈 hides',rlS:'🔍 seeks',rlO:'👀 watches',removeBot:'Remove robot',
+ team:'🙈 {0} hiding · 🔍 {1} seeking — ',teamOk:'teams are even, ready! ✔',teamNone:'nobody has chosen yet',teamBad:'teams must be the same size',hostOnly:'(only the host {0} can change this)',
+ lastRound:'Round {0} is over',resSeek:'🔍 {0} was seeking',resFound:'🙈 {0} was found by {1} after {2} and gave a flower 🌺',resHidden:'🏆 {0} was not found – hid {1}',hidWell:'well',outTag:' (out)',
+ place:'{0}. place',waitNew:'Waiting for the host to start a new game …',awardsTitle:'Award ceremony 🏆',congrats:'Congratulations, {0}!',and:' and ',
+ creating:'Creating room …',createFail:'Could not create room: ',need4:'Enter a 4-letter code',connecting:'Connecting …',notFound:'Room not found. Check the code and try again.',
+ setTitle:'⚙ Settings',lang:'🌐 Language:',sfx:'🔊 Sound effects:',song:'🎤 Singing:',myCatName:"🐱 Your cat's name:",hostLive:'For the host – takes effect at once',
+ pause:'⏸ Pause',resume:'▶ Resume',exitGame:'🚪 Exit game',exitConfirm:'Exit? You will go back to the start page.',exitHostWarn:'You are the host – the game stops for everyone.',yes:'Yes, exit',no:'No',close:'Close',
+ signBed:'Bedroom 🛏',signBath:'Bathroom 🛁',signKids:'Kids room 🧸',signLiving:'Living room 🛋',signKitchen:'Kitchen 🍳',signCellar:'Cellar 🕯',signGarden:'Garden 🌳',
+ lblFamily:'Family photo',lblDrawn:'Drawn by Isabella',lblWoof:'WOOF',lblTree:'Treehouse',lblToys:'TOYS',lblFish:'FISH',lblJul:'XMAS',lblHot:'HOT',lblBike:'BIKE',
+ meow:['Meow!','Meooow…','Mew-mew!','Miii~','Mrrrow!','Mew~','Meow…?']},
+};
+const SPOT_NAMES={
+ zh:['床底下','窗帘后面','衣柜里','衣柜顶上','抽屉里','浴缸里','洗手池下面的柜子里','脏衣篮里','儿童房的帐篷里','玩具箱里','书架上','客厅沙发后面','电视柜里','大花盆后面','楼梯下的小门里','冰箱顶上','厨房橱柜里','餐桌布下面','水桶里','纸箱里','狗窝里','灌木丛里','树屋里','手推车里','花园小木屋里','柴堆后面','滑雪板后面','旧木箱里','工作台下面','热水器后面','洗衣机里','果酱架最上层','圣诞装饰箱里','白布下面'],
+ en:['under the bed','behind the curtain','in the wardrobe','on top of the wardrobe','in the drawer','in the bathtub','in the cupboard under the sink','in the laundry basket','in the tent in the kids room','in the toy box','in the bookshelf','behind the sofa','in the TV cabinet','behind the big flower pot','in the closet under the stairs','on top of the fridge','in the kitchen cupboard','under the tablecloth','in the bucket','in the cardboard box','in the doghouse','in the bush','in the treehouse','in the wheelbarrow','in the garden shed','behind the woodpile','behind the skis','in the old chest','under the workbench','behind the water heater','in the washing machine','on the top jam shelf','in the Christmas box','under the white sheet'],
+};
+function t(k,...a){const d=TXT[LANG]||TXT.nb;let s=d[k];if(s==null)s=TXT.nb[k];if(s==null)return k;if(typeof s!=='string')return s;return s.replace(/\{(\d)\}/g,(m,i)=>a[+i]!=null?a[+i]:'');}
+function spName(sp){const i=typeof sp==='number'?sp:SPOTS.indexOf(sp);if(LANG==='nb'||!SPOT_NAMES[LANG])return SPOTS[i].name;return SPOT_NAMES[LANG][i];}
+function applyLang(){document.documentElement.lang=LANG==='zh'?'zh':LANG==='en'?'en':'nb';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{el.innerHTML=t(el.dataset.i18nHtml);});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t(el.dataset.i18nPh);});}
 
 /* ================= Verktøy ================= */
 const rnd=(a,b)=>a+Math.random()*(b-a);
@@ -458,7 +612,7 @@ function miniCats(c,x,y,w,h,list){rr(c,x,y,w,h,6);fs(c,'#fff');c.fillStyle='#FFF
     tri(c,cx-8,cy-4,cx-7,cy-15,cx-1,cy-8);c.fill();c.stroke();tri(c,cx+8,cy-4,cx+7,cy-15,cx+1,cy-8);c.fill();c.stroke();
     c.beginPath();c.arc(cx,cy,8.5,0,Math.PI*2);c.fill();c.stroke();c.fillStyle=d.feat&&d.line?'#fff':OUT;c.beginPath();c.arc(cx-3,cy-1,1.3,0,7);c.arc(cx+3,cy-1,1.3,0,7);c.fill();});}
 
-function landing(c){miniCats(c,1240,140,150,90,CATS);c.font='bold 13px sans-serif';c.fillStyle='#8D6E63';c.textAlign='center';c.fillText('Familiebilde',1315,246);
+function landing(c){miniCats(c,1240,140,150,90,CATS);c.font='bold 13px sans-serif';c.fillStyle='#8D6E63';c.textAlign='center';c.fillText(t('lblFamily'),1315,246);
   rr(c,1345,420,42,50,6);fs(c,'#E57373');for(const a of[-.5,0,.5]){c.save();c.translate(1366,420);c.rotate(a);c.beginPath();c.ellipse(0,-22,9,22,0,0,7);fs(c,'#66BB6A',OUT,2);c.restore();}}
 function tub(c){const s=S.tub,sh=shk(s);
   c.strokeStyle=OUT;c.lineWidth=4;c.beginPath();c.moveTo(1424,118);c.lineTo(1706,118);c.moveTo(1690,118);c.lineTo(1690,150);c.stroke();
@@ -491,10 +645,10 @@ function tent(c){const s=S.tent,sh=shk(s),o=s.open;c.save();c.translate(sh,0);
 function toybox(c){const s=S.toybox,sh=shk(s),o=s.open;c.save();c.translate(sh,0);
   c.beginPath();c.arc(2352,384,14,0,7);fs(c,'#E53935',OUT,2);c.fillStyle='#fff';c.fillRect(2340,381,24,5);
   c.beginPath();c.arc(2424,384,10,0,7);fs(c,'#A1887F',OUT,2);c.beginPath();c.arc(2440,382,10,0,7);fs(c,'#A1887F',OUT,2);
-  rr(c,2320,392,140,78,6);fs(c,'#81C784');c.font='bold 22px sans-serif';c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.fillText('LEKER',2390,432);
+  rr(c,2320,392,140,78,6);fs(c,'#81C784');c.font='bold 22px sans-serif';c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.fillText(t('lblToys'),2390,432);
   c.save();c.translate(2316,386);c.rotate(-o*.55);rr(c,0,-6,148,13,5);fs(c,'#66BB6A');c.restore();c.restore();
   [['A','#64B5F6',2268,446],['B','#FFD54F',2292,446],['C','#E57373',2280,422]].forEach(([t,col,x,y])=>{rr(c,x,y,24,24,3);fs(c,col,OUT,2);c.fillStyle=OUT;c.font='bold 15px sans-serif';c.textAlign='center';c.fillText(t,x+12,y+13);});}
-function kidsDecor(c){miniCats(c,2120,120,130,80,[CATS[3],CATS[5],CATS[6]]);c.font='bold 12px sans-serif';c.fillStyle='#8D6E63';c.textAlign='center';c.fillText('Tegnet av Isabella',2185,214);
+function kidsDecor(c){miniCats(c,2120,120,130,80,[CATS[3],CATS[5],CATS[6]]);c.font='bold 12px sans-serif';c.fillStyle='#8D6E63';c.textAlign='center';c.fillText(t('lblDrawn'),2185,214);
   c.strokeStyle=OUT;c.lineWidth=1.5;for(const[x,l]of[[2330,60],[2370,90],[2410,70]]){c.beginPath();c.moveTo(x,18);c.lineTo(x,18+l);c.stroke();star(c,x,22+l+Math.sin(T*2+x)*3,12,'#FFD54F');}}
 function stairs(c){const{bx,by,tx,ty}=STAIR,n=14,rise=(by-ty)/n,run=(bx-tx)/n;const s=S.under,o=s.open;
   c.beginPath();c.moveTo(1233,556);c.lineTo(bx,by);c.lineTo(1170,by);c.lineTo(1170,556);c.closePath();fs(c,'#E9D3B4');
@@ -518,7 +672,7 @@ function fridge(c){const s=S.fridge,sh=shk(s);
   rr(c,1520,680,100,330,10);fs(c,'#E3F2FD');c.strokeStyle=OUT;c.lineWidth=3;c.beginPath();c.moveTo(1520,790);c.lineTo(1620,790);c.stroke();
   rr(c,1604,705,7,55,3);fs(c,'#90A4AE',OUT,2);rr(c,1604,815,7,75,3);fs(c,'#90A4AE',OUT,2);
   drawFlower(c,1545,840,7);heart(c,1570,880,7,'#E53935');rr(c,1535,900,40,32,2);fs(c,'#fff',OUT,1.5);c.fillStyle=CATS[1].fur;c.beginPath();c.arc(1555,918,8,0,7);c.fill();
-  c.save();c.translate(sh,0);rr(c,1528,632,40,48,3);fs(c,'#FFB74D');c.fillStyle='#E53935';c.font='bold 11px sans-serif';c.textAlign='center';c.fillText('FISK',1548,652);
+  c.save();c.translate(sh,0);rr(c,1528,632,40,48,3);fs(c,'#FFB74D');c.fillStyle='#E53935';c.font='bold 11px sans-serif';c.textAlign='center';c.fillText(t('lblFish'),1548,652);
   rr(c,1574,648,26,32,3);fs(c,'#fff');c.fillStyle='#64B5F6';c.fillRect(1576,660,22,8);c.restore();}
 function counter(c){const s=S.kcab,sh=shk(s),o=s.open;
   rr(c,1660,600,330,100,6);fs(c,'#FFE0B2');c.strokeStyle=OUT;c.lineWidth=2;c.beginPath();for(const x of[1770,1880]){c.moveTo(x,604);c.lineTo(x,696);}c.stroke();
@@ -537,7 +691,7 @@ function kwindow(c){rr(c,2110,615,180,125,6);fs(c,'#fff');c.fillStyle='#BFE6FA';
 function doghouse(c){const s=S.dog,sh=shk(s);c.save();c.translate(sh,0);
   rr(c,2812,890,136,120,4);fs(c,'#FFB74D');tri(c,2795,898,2880,822,2965,898);fs(c,'#8D6E63');
   c.beginPath();c.moveTo(2852,1010);c.lineTo(2852,952);c.arc(2880,952,28,Math.PI,0);c.lineTo(2908,1010);c.closePath();fs(c,'#3E2723');
-  rr(c,2862,900,36,18,4);fs(c,'#fff',OUT,2);c.fillStyle=OUT;c.font='bold 11px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText('VOFF',2880,910);c.restore();
+  rr(c,2862,900,36,18,4);fs(c,'#fff',OUT,2);c.fillStyle=OUT;c.font='bold 11px sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillText(t('lblWoof'),2880,910);c.restore();
   c.beginPath();c.ellipse(2985,1004,20,7,0,0,7);fs(c,'#E53935',OUT,2);rr(c,2972,992,26,6,3);fs(c,'#fff',OUT,1.5);}
 function bush(c){const s=S.bush,sh=shk(s);c.save();c.translate(sh,0);
   for(const[x,y,r]of[[3040,975,40],[3172,982,34],[3082,948,48],[3132,952,50],[3100,988,46]]){c.beginPath();c.arc(x,y,r,0,7);fs(c,'#43A047');}
@@ -552,7 +706,7 @@ function tree(c){const s=S.tree,sh=shk(s);
   rr(c,3222,500,196,98,4);fs(c,'#D7A86E');c.strokeStyle='#B07A4A';c.lineWidth=2;c.beginPath();for(let y=522;y<598;y+=22){c.moveTo(3224,y);c.lineTo(3416,y);}c.stroke();
   rr(c,3340,525,50,46,4);fs(c,'#5D4037');rr(c,3242,532,42,66,4);fs(c,'#5D4037');
   tri(c,3205,505,3320,428,3435,505);fs(c,'#E57373');rr(c,3210,596,220,14,4);fs(c,'#A1887F');
-  c.font='bold 14px sans-serif';c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.fillText('Trehytta',3320,478);
+  c.font='bold 14px sans-serif';c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.fillText(t('lblTree'),3320,478);
   c.strokeStyle=OUT;c.lineWidth=2;c.beginPath();c.moveTo(3320,428);c.lineTo(3320,404);c.stroke();tri(c,3320,404,3342,410,3320,418);fs(c,'#FFD54F',OUT,2);c.restore();}
 function barrow(c){const s=S.barrow,sh=shk(s);c.save();c.translate(sh,0);
   c.strokeStyle=OUT;c.lineWidth=5;c.beginPath();c.moveTo(3494,950);c.lineTo(3446,935);c.moveTo(3506,985);c.lineTo(3500,1008);c.stroke();
@@ -601,7 +755,7 @@ function chest(c){const s=S.kiste,sh=shk(s),o=s.open;c.save();c.translate(sh,0);
 function bike(c){c.strokeStyle=OUT;c.lineWidth=4;for(const x of[700,820]){c.beginPath();c.arc(x,1512,36,0,7);c.stroke();c.beginPath();c.arc(x,1512,4,0,7);c.fillStyle=OUT;c.fill();}
   c.strokeStyle='#E53935';c.lineWidth=6;c.beginPath();c.moveTo(700,1512);c.lineTo(750,1470);c.lineTo(805,1470);c.lineTo(820,1512);c.moveTo(750,1470);c.lineTo(760,1512);c.lineTo(700,1512);c.moveTo(805,1470);c.lineTo(800,1445);c.moveTo(750,1470);c.lineTo(745,1455);c.stroke();
   rr(c,732,1448,28,8,4);fs(c,OUT);c.strokeStyle=OUT;c.lineWidth=4;c.beginPath();c.moveTo(788,1442);c.lineTo(812,1442);c.stroke();
-  rr(c,690,1380,70,40,6);fs(c,'#FFF8E1',OUT,2);c.fillStyle='#E53935';c.font='bold 13px '+FONT;c.textAlign='center';c.textBaseline='middle';c.fillText('SYKKEL',725,1400);}
+  rr(c,690,1380,70,40,6);fs(c,'#FFF8E1',OUT,2);c.fillStyle='#E53935';c.font='bold 13px '+FONT;c.textAlign='center';c.textBaseline='middle';c.fillText(t('lblBike'),725,1400);}
 function workbench(c){const s=S.benk,sh=shk(s);
   rr(c,1160,1290,240,140,4);fs(c,'#D7A86E');c.fillStyle='rgba(0,0,0,.25)';for(let x=1172;x<1400;x+=16)for(let y=1302;y<1430;y+=16){c.beginPath();c.arc(x,y,1.6,0,7);c.fill();}
   c.save();c.translate(1200,1340);c.rotate(-.5);rr(c,-4,-28,8,46,3);fs(c,'#8D6E63',OUT,2);rr(c,-14,-36,28,12,3);fs(c,'#90A4AE',OUT,2);c.restore();
@@ -613,7 +767,7 @@ function workbench(c){const s=S.benk,sh=shk(s);
 function boiler(c){const s=S.bereder,sh=shk(s);
   c.strokeStyle='#90A4AE';c.lineWidth=8;c.beginPath();c.moveTo(1495,1320);c.lineTo(1495,1110);c.lineTo(2700,1110);c.moveTo(1535,1320);c.lineTo(1535,1130);c.lineTo(1400,1130);c.stroke();
   c.save();c.translate(sh,0);rr(c,1470,1320,90,230,40);fs(c,'#ECEFF1');c.beginPath();c.arc(1515,1380,13,0,7);fs(c,'#fff',OUT,2);c.strokeStyle='#E53935';c.lineWidth=2;c.beginPath();c.moveTo(1515,1380);c.lineTo(1522,1372);c.stroke();
-  rr(c,1490,1420,50,22,4);fs(c,'#FFCA28',OUT,2);c.fillStyle=OUT;c.font='bold 10px '+FONT;c.textAlign='center';c.textBaseline='middle';c.fillText('VARMT',1515,1431);c.restore();}
+  rr(c,1490,1420,50,22,4);fs(c,'#FFCA28',OUT,2);c.fillStyle=OUT;c.font='bold 10px '+FONT;c.textAlign='center';c.textBaseline='middle';c.fillText(t('lblHot'),1515,1431);c.restore();}
 function washer(c){const s=S.vask,sh=shk(s)*1.5+(s.shake>0?0:Math.sin(T*30)*.4),o=s.open;c.save();c.translate(sh,0);
   rr(c,1620,1420,130,130,8);fs(c,'#FAFAFA');c.fillStyle='#E0E0E0';c.fillRect(1624,1424,122,22);c.strokeStyle=OUT;c.lineWidth=2;c.beginPath();c.moveTo(1620,1446);c.lineTo(1750,1446);c.stroke();
   c.beginPath();c.arc(1720,1435,6,0,7);fs(c,'#90A4AE',OUT,1.5);c.fillStyle='#43A047';c.fillRect(1636,1431,20,6);
@@ -630,7 +784,7 @@ function jamShelf(c){const s=S.hylle,sh=shk(s);
     rr(c,1812,y,214,8,2);fs(c,'#A1887F',OUT,2);}
   rr(c,1812,F2-10,214,10,2);fs(c,'#A1887F',OUT,2);}
 function xmasBoxes(c){const s=S.jul,sh=shk(s),o=s.open;
-  rr(c,2090,1460,130,90,4);fs(c,'#D9A86C');c.fillStyle='#E53935';c.fillRect(2148,1460,14,90);c.font='bold 22px '+FONT;c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.fillText('JUL',2120,1508);
+  rr(c,2090,1460,130,90,4);fs(c,'#D9A86C');c.fillStyle='#E53935';c.fillRect(2148,1460,14,90);c.font='bold 22px '+FONT;c.fillStyle='#fff';c.textAlign='center';c.textBaseline='middle';c.fillText(t('lblJul'),2120,1508);
   rr(c,2110,1385,100,75,4);fs(c,'#C8955A');c.fillStyle='#43A047';c.fillRect(2154,1385,12,75);
   c.save();c.translate(sh,0);
   c.save();c.translate(2225,1490);c.rotate(-.4-o*.5);rr(c,-2,-22,8,24,2);fs(c,'#C8955A',OUT,2);c.restore();
@@ -738,10 +892,10 @@ function drawBG(c){
     for(const lx of[300,1270,1560,2350])if(lx>v0&&lx<v1)lamp(c,lx,18);
     for(const lx of[380,1060,1800,2210])if(lx>v0&&lx<v1)lamp(c,lx,556);
   }
-  for(const[x,y,t]of[[560,46,'Soverom 🛏'],[1690,46,'Bad 🛁'],[2560,46,'Barnerom 🧸'],[260,590,'Stue 🛋'],[2420,590,'Kjøkken 🍳'],[900,1126,'Kjeller 🕯']])if(x>v0-60&&x<v1+60)sign(c,x,y,t);
+  for(const[x,y,tx]of[[560,46,t('signBed')],[1690,46,t('signBath')],[2560,46,t('signKids')],[260,590,t('signLiving')],[2420,590,t('signKitchen')],[900,1126,t('signCellar')]])if(x>v0-60&&x<v1+60)sign(c,x,y,tx);
   if(v1>HOUSE&&showTop){const a=Math.max(HOUSE,v0),b=Math.min(W,v1);c.fillStyle='#7CB342';c.fillRect(a,F1,b-a,70);c.fillStyle='#689F38';c.fillRect(a,F1,b-a,8);
     c.strokeStyle='#558B2F';c.lineWidth=2;c.beginPath();for(let x=Math.floor(a/30)*30;x<b;x+=30){c.moveTo(x,F1+30);c.lineTo(x+5,F1+20);c.lineTo(x+10,F1+30);}c.stroke();
-    if(2780>v0&&2780<v1){c.fillStyle='#8D6E63';c.fillRect(2776,900,8,110);sign(c,2780,900,'Hage 🌳');}}
+    if(2780>v0&&2780<v1){c.fillStyle='#8D6E63';c.fillRect(2776,900,8,110);sign(c,2780,900,t('signGarden'));}}
   if(v1>HOUSE-40&&v0<HOUSE+60){c.fillStyle='#B5583F';c.fillRect(HOUSE,0,32,862);c.fillStyle='#9E9E9E';c.fillRect(HOUSE,F1+70,32,H-F1-70);
     c.strokeStyle='rgba(255,255,255,.35)';c.lineWidth=2;c.beginPath();for(let y=20;y<862;y+=20){c.moveTo(HOUSE,y);c.lineTo(HOUSE+32,y);}c.stroke();
     c.strokeStyle=OUT;c.lineWidth=3;c.strokeRect(HOUSE,0,32,862);c.strokeRect(HOUSE,F1+70,32,H-F1-70);rr(c,HOUSE-4,852,40,12,3);fs(c,'#8D6E63');rr(c,HOUSE+34,866,10,144,3);fs(c,'#B07A4A');
@@ -764,7 +918,7 @@ function drawHint(c,h){
 /* ================= Lyd ================= */
 let AC=null,muted=false;
 function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(AC&&AC.state==='suspended')AC.resume();return AC;}
-function tone(f,dur,type,vol,when,slide){if(muted)return;const a=ac();if(!a)return;const t0=a.currentTime+(when||0);const o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t0);if(slide)o.frequency.exponentialRampToValueAtTime(slide,t0+dur);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(vol||.1,t0+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);o.connect(g);g.connect(a.destination);o.start(t0);o.stop(t0+dur+.05);}
+function tone(f,dur,type,vol,when,slide){if(muted)return;const a=ac();if(!a)return;const t0=a.currentTime+(when||0);const o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t0);if(slide)o.frequency.exponentialRampToValueAtTime(slide,t0+dur);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(Math.max(.0001,(vol||.1)*SFXV),t0+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);o.connect(g);g.connect(a.destination);o.start(t0);o.stop(t0+dur+.05);}
 // Byttes ut med blomstersangen senere
 function playRewardSong(){[523,659,784,1047].forEach((f,i)=>tone(f,.22,'triangle',.16,i*.12));tone(1319,.55,'triangle',.14,.5);}
 function fanfare(){[[523,0],[523,.15],[523,.3],[659,.45],[784,.75],[659,1.0],[784,1.15],[1047,1.4]].forEach(([f,w])=>tone(f,.28,'triangle',.16,w));}
@@ -782,7 +936,7 @@ function loadVoices(){const a=ac();if(!a||voiceLoading)return;voiceLoading=true;
     const pr=a.decodeAudioData(u.buffer,b=>{voiceBuf[k]=b;},()=>{});if(pr&&pr.catch)pr.catch(()=>{});}catch(e){}}}
 function playVoice(k){if(muted)return;const a=ac(),b=voiceBuf[k];if(!a||!b){playRewardSong();return;}
   try{if(curVoice)curVoice.stop();}catch(e){}
-  const src=a.createBufferSource(),g=a.createGain();src.buffer=b;g.gain.value=1;src.connect(g);g.connect(a.destination);src.start();curVoice=src;}
+  const src=a.createBufferSource(),g=a.createGain();src.buffer=b;g.gain.value=VOXV;src.connect(g);g.connect(a.destination);src.start();curVoice=src;}
 function assignVoices(cats){const v={};cats.forEach(i=>{v[i]=CATS[i].boy?'boy_1':(Math.random()<.5?'girl_1':'girl_2');});return v;}
 
 
@@ -840,8 +994,8 @@ const MEOW=[
  {f:[950,1260,1040],d:.62,w:'sine',vib:5,vd:10,harm:1},
  {f:[680,1050,620],d:.5,w:'triangle',vib:9,vd:35},
 ];
-const MEOW_TXT=['Mjau!','Mjaaau…','Mi-mi!','Mjiii~','Mrrrau!','Mjååu~','Mjau…?'];
-function meowCat(i,vol){if(muted)return;const a=ac();if(!a)return;const p=MEOW[i]||MEOW[0];vol=vol||.08;
+
+function meowCat(i,vol){if(muted)return;const a=ac();if(!a)return;const p=MEOW[i]||MEOW[0];vol=Math.max(.0001,(vol||.08)*SFXV);
   for(let r=0;r<(p.rep||1);r++){const t0=a.currentTime+r*(p.d+.06);
     const mk=(mult,v)=>{const o=a.createOscillator(),g=a.createGain();o.type=mult>1?'sine':p.w;const n=p.f.length;o.frequency.setValueAtTime(p.f[0]*mult,t0);
       for(let k=1;k<n;k++)o.frequency.exponentialRampToValueAtTime(p.f[k]*mult,t0+p.d*k/(n-1));
@@ -889,8 +1043,8 @@ function startLocal(){
   setInterval(()=>{bc.postMessage({id:Net.myId,p:Net.me});const now=performance.now();for(const[k,v]of Net.peers)if(now-v.seen>3000)Net.peers.delete(k);},500);
   addEventListener('beforeunload',()=>bc.postMessage({id:Net.myId,bye:1}));
 }
-function loadPeer(){return new Promise((res,rej)=>{if(window.Peer)return res();const s=document.createElement('script');s.src='https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';s.onload=()=>res();s.onerror=()=>rej(new Error('Kunne ikke laste nettverksbiblioteket'));document.head.appendChild(s);});}
-function withTimeout(p,ms){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('Fikk ikke kontakt')),ms))]);}
+function loadPeer(){return new Promise((res,rej)=>{if(window.Peer)return res();const s=document.createElement('script');s.src='https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js';s.onload=()=>res();s.onerror=()=>rej(new Error(t('errLib')));document.head.appendChild(s);});}
+function withTimeout(p,ms){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error(t('errConn'))),ms))]);}
 async function startPeerHost(code){
   await loadPeer();const peer=new Peer('finnkattene-'+code.toLowerCase());
   await withTimeout(new Promise((res,rej)=>{peer.on('open',res);peer.on('error',rej);}),12000);
@@ -936,6 +1090,7 @@ function randSpawn(){const r=Math.random(),lv=r<.33?0:r<.75?1:2,[a,b]=LVX[lv];le
 
 /* ================= VERT: spillregler ================= */
 let HS=null;
+let SFXV=store.get('sfx',.8),VOXV=store.get('vox',1);
 let SEEK_MIN=store.get('min',3),ROUNDS=store.get('rounds',3),HINTS=store.get('hints',true),NDOGS=store.get('dogs',1),NFISH=store.get('fish',1);
 function hostCreate(){
   HS={born:Date.now(),ph:'lobby',rd:0,nr:ROUNDS,mn:SEEK_MIN,hn:HINTS,fl:CATS.map(()=>START_FLOWERS),inm:[],
@@ -947,7 +1102,7 @@ function hostAssign(){
   const hum=everyone().filter(e=>e.p&&e.p.lob).sort((a,b)=>(a.p.lob.t||0)-(b.p.lob.t||0)||(a.id<b.id?-1:1));
   const taken=new Set(),as=[];
   for(const e of hum){const L=e.p.lob;let cat=(typeof L.cat==='number'&&L.cat>=0&&L.cat<CATS.length)?L.cat:-1;let role=['h','s','o'].includes(L.role)?L.role:'o';
-    if(cat>=0&&taken.has(cat))cat=-1;if(cat<0)role='o';else{taken.add(cat);if(HS.fl[cat]<=0)role='o';}as.push([e.id,cat,role]);}
+    if(cat>=0&&taken.has(cat))cat=-1;if(cat<0)role='o';else{taken.add(cat);if(HS.fl[cat]<=0)role='o';}as.push([e.id,cat,role,cleanName(L.cn)]);}
   HS.bots=HS.bots.filter(b=>{if(b.cat<0||taken.has(b.cat)||HS.fl[b.cat]<=0){const f=freeCat(taken);if(f<0)return false;b.cat=f;}taken.add(b.cat);as.push(['',b.cat,b.role]);return true;});
   HS.as=as;
 }
@@ -1052,6 +1207,7 @@ function hostEndRound(){
   HS.ph=(HS.rd>=HS.nr||alive.length<2)?'awards':'lobby';
 }
 function hostTick(dt){
+  if(HS.pz&&(HS.ph==='hide'||HS.ph==='seek'||HS.ph==='over')){publishG();return;}
   if(HS.ph==='lobby'){hostAssign();}
   else if(HS.ph==='hide'||HS.ph==='seek'||HS.ph==='over'){
     const cats=Object.values(HS.cats);
@@ -1075,7 +1231,7 @@ function hostTick(dt){
 }
 function botCode(c){if(c.state==='hidden'&&!c.tw)return 3;if(c.tw){const k=c.tw.kind;return k==='enter'?2:k==='climb'?5:k==='bhop'||k==='bdown'?1:4;}if(c.sniff>0){c.sniff-=.016;return 6;}return 0;}
 function publishG(){
-  const g={born:HS.born,ph:HS.ph,t:Math.max(0,Math.round(HS.t*10)),rd:HS.rd,nr:HS.nr,mn:HS.mn,hn:HS.hn?1:0,nd:HS.nd,nf:HS.nf,fl:HS.fl,inm:HS.inm,vo:HS.vo,as:HS.as,ev:HS.ev};
+  const g={born:HS.born,pz:HS.pz?1:0,ph:HS.ph,t:Math.max(0,Math.round(HS.t*10)),rd:HS.rd,nr:HS.nr,mn:HS.mn,hn:HS.hn?1:0,nd:HS.nd,nf:HS.nf,fl:HS.fl,inm:HS.inm,vo:HS.vo,as:HS.as,ev:HS.ev};
   if(HS.ph==='hide'||HS.ph==='seek'||HS.ph==='over'){g.ros=HS.ros;const b={},hid={},fd={};
     for(const c of Object.values(HS.cats)){if(!c.ctrl)b[c.cat]=[Math.round(c.x),Math.round(c.y),c.face,c.move?1:0,botCode(c)];if(c.hidden>=0)hid[c.cat]=c.hidden;if(c.found)fd[c.cat]=[c.found.by,c.found.rank,c.found.sec];}
     g.b=b;g.hid=hid;g.fd=fd;g.d=HS.dogs.map(d=>[Math.round(d.x),Math.round(d.y),d.face,d.move?1:0]);g.f=HS.fish.filter(f=>f.live&&!f.taken).map(f=>[f.id,Math.round(f.x),Math.round(f.y)]);}
@@ -1087,10 +1243,12 @@ function publishG(){
 let GS=null,hostE=null,Lp=null,lastRd=-1,lastEv=-1,obsIdx=0,actN=Math.floor(Math.random()*1000);
 let parts=[],bubbles=[],banner=null;const disp={},hintAt={};let dogsDisp=[];
 const keys={},pressed={};
-let myLob=store.get('lob',{cat:-1,role:'h'});myLob.t=Date.now();
-function myName(){return(document.getElementById('nick').value||'').trim().slice(0,16)||'Spiller';}
-function pubLob(){netSet({nm:myName(),lob:{cat:myLob.cat,role:myLob.role,t:myLob.t}});store.set('lob',{cat:myLob.cat,role:myLob.role});}
-function nameOf(id){if(!id)return'Robot';const e=peerById(id);return(e&&e.p&&e.p.nm)||'Spiller';}
+let myLob=store.get('lob',{cat:-1,role:'h',cn:''});myLob.t=Date.now();if(typeof myLob.cn!=='string')myLob.cn='';
+const cleanName=v=>String(v||'').replace(/[\u0000-\u001f\u007f<>]/g,'').trim().slice(0,12);
+function catName(i){const a=GS&&GS.as&&GS.as.find(a=>a[1]===i&&a[0]);return(a&&a[3])||CATS[i].name;}
+function myName(){return(document.getElementById('nick').value||'').trim().slice(0,16)||t('player');}
+function pubLob(){netSet({nm:myName(),lob:{cat:myLob.cat,role:myLob.role,t:myLob.t,cn:cleanName(myLob.cn)}});store.set('lob',{cat:myLob.cat,role:myLob.role,cn:myLob.cn});}
+function nameOf(id){if(!id)return t('robot');const e=peerById(id);return(e&&e.p&&e.p.nm)||t('player');}
 function findHost(){let best=null;for(const e of everyone()){const g=e.p&&e.p.g;if(g&&g.born&&(!best||g.born<best.p.g.born||(g.born===best.p.g.born&&e.id<best.id)))best=e;}return best;}
 function sendAct(k,s){actN++;netSet({act:{n:actN,k,s:s==null?-1:s,c:Lp.cat,r:GS.rd}});}
 function catPos(cat){if(Lp&&Lp.cat===cat)return Lp;return disp[cat]||null;}
@@ -1112,7 +1270,7 @@ function myPhysics(e,dt,dir){
   e.vy+=G*dt;const py=e.y,px=e.x,want=e.x+e.vx*dt;e.x=clamp(want,20,W-20);e.y+=e.vy*dt;
   if(px<=HOUSE-14&&(e.y<840||e.y>F1+60))e.x=Math.min(e.x,HOUSE-14);
   if(px>=HOUSE+46&&e.y<840)e.x=Math.max(e.x,HOUSE+46);
-  if(dir&&Math.abs(e.x-want)>.5&&e.bump<=0){e.bump=.6;bonk();for(let i=0;i<6;i++)parts.push({type:'spark',x:e.x+dir*30,y:e.y-40+rnd(-15,15),vx:-dir*rnd(40,120),vy:rnd(-80,40),life:.5,max:.5,r:rnd(3,5)});bubbles.push({x:e.x,y:e.y-110,text:'Au!',t:.8,max:.8,small:true});}
+  if(dir&&Math.abs(e.x-want)>.5&&e.bump<=0){e.bump=.6;bonk();for(let i=0;i<6;i++)parts.push({type:'spark',x:e.x+dir*30,y:e.y-40+rnd(-15,15),vx:-dir*rnd(40,120),vy:rnd(-80,40),life:.5,max:.5,r:rnd(3,5)});bubbles.push({x:e.x,y:e.y-110,text:t('ouch'),t:.8,max:.8,small:true});}
   e.onGround=false;e.plat=null;
   if(e.vy>=0){for(const p of PLATS){if(e.drop>0&&p===e.dropPlat)continue;if(e.x>=p.x1&&e.x<=p.x2&&py<=p.y+1&&e.y>=p.y){e.y=p.y;e.vy=0;e.onGround=true;e.plat=p;break;}}
     const fl=e.x<=HOUSE+1?F2:F1;if(!e.onGround&&e.y>=fl){e.y=fl;e.vy=0;e.onGround=true;}}
@@ -1132,7 +1290,7 @@ function myTick(dt){
     return;}
   if(myFound&&!['pop','give','follow'].includes(e.mode)){e.lv=catPos(myFound[0])?levelOf(catPos(myFound[0]).x,catPos(myFound[0]).y):e.lv;const f=catPos(myFound[0]);
     e.mode='pop';startTween(e,f?clamp(f.x+(f.face||1)*70,40,W-40):e.x,floorY(e.lv),.6,90,'pop');return;}
-  if(ph==='over'&&!myFound&&e.role==='h'&&(e.mode==='hidden'||e.mode==='hidwait')){e.mode='x';const sp=e.spot;startTween(e,clamp(sp.cx+rnd(-50,50),40,W-40),floorY(sp.lv),.6,70,'rexit');e.lv=sp.lv;bubbles.push({x:sp.cx,y:sp.cy-110,text:'Jeg gjemte meg godt! 😼',t:2.2,max:2.2});return;}
+  if(ph==='over'&&!myFound&&e.role==='h'&&(e.mode==='hidden'||e.mode==='hidwait')){e.mode='x';const sp=e.spot;startTween(e,clamp(sp.cx+rnd(-50,50),40,W-40),floorY(sp.lv),.6,70,'rexit');e.lv=sp.lv;bubbles.push({x:sp.cx,y:sp.cy-110,text:t('revealOk'),t:2.2,max:2.2});return;}
   const dir=(keys.right?1:0)-(keys.left?1:0);
   switch(e.mode){
     case 'frozen':e.move=0;if(ph==='seek')e.mode='free';break;
@@ -1146,8 +1304,8 @@ function myTick(dt){
         if(e.role==='h'&&sp&&(ph==='hide'||ph==='seek')&&!myFound){e.spot=sp;e.lv=sp.lv;sendAct('hide',SPOT_IDX[sp.id]);startTween(e,sp.cx,sp.cy,.45,Math.max(40,e.y-sp.cy+40),'enter');e.mode='entering';break;}
         if(e.role==='s'&&sp&&ph==='seek'){e.sniff=.4;sp.shake=.45;sp.open=1;sp.hold=.9;sendAct('search',SPOT_IDX[sp.id]);break;}
         if(!sp&&e.plat&&!e.plat.solid){e.drop=.25;e.dropPlat=e.plat;e.onGround=false;e.plat=null;}
-        else if(!sp){bubbles.push({x:e.x,y:e.y-110,text:'Ingen gjemmesteder her',t:1,max:1});boop();}
-        else if(e.role==='s'&&ph==='hide'){bubbles.push({x:e.x,y:e.y-110,text:'Vent til tiden starter!',t:1,max:1});}
+        else if(!sp){bubbles.push({x:e.x,y:e.y-110,text:t('noSpot'),t:1,max:1});boop();}
+        else if(e.role==='s'&&ph==='hide'){bubbles.push({x:e.x,y:e.y-110,text:t('waitTime'),t:1,max:1});}
       }
       myPhysics(e,dt,dir);break;}
     case 'hidwait':e.wait-=dt;if(srvHid===SPOT_IDX[e.spot.id]){e.mode='hidden';bubbles.push({x:e.spot.cx,y:e.spot.cy-100,text:'🤫',t:1,max:1,small:true});}
@@ -1186,26 +1344,26 @@ function processEvents(){
 function camDist(x,y){const c=camTarget();return c?Math.abs(c.x-x)+Math.abs(c.y-y)*1.5:9999;}
 function onEvent(k,a,b,s){
   const myCat=Lp?Lp.cat:-1;
-  if(k==='start'){banner={text:Lp&&Lp.role==='s'?'Lukk øynene og tell til 10 …':'Gjem deg! Du har 10 sekunder 🙈',t:2.4,max:2.4};}
-  else if(k==='go'){banner={text:'Klar eller ei – nå letes det! 🔍',t:2.2,max:2.2};tone(660,.15,'triangle',.12);tone(990,.25,'triangle',.12,.15);}
+  if(k==='start'){banner={text:Lp&&Lp.role==='s'?t('startSeek'):t('startHide'),t:2.4,max:2.4};}
+  else if(k==='go'){banner={text:t('go'),t:2.2,max:2.2};tone(660,.15,'triangle',.12);tone(990,.25,'triangle',.12,.15);}
   else if(k==='srch'){const sp=SPOTS[s];if(!sp)return;sp.shake=.45;sp.open=1;sp.hold=.9;
-    if(b<0&&a===myCat){bubbles.push({x:sp.cx,y:sp.cy-100,text:`Tomt ${sp.name}!`,t:1.2,max:1.2});boop();for(let i=0;i<8;i++)parts.push({type:'dust',x:sp.cx+rnd(-30,30),y:sp.cy-rnd(5,30),vx:rnd(-50,50),vy:rnd(-40,-5),life:.7,max:.7,r:rnd(6,12)});}}
-  else if(k==='found'){const hn=CATS[a].name,sn=CATS[b].name;banner={text:`Fant ${hn}! ${hn} gir ${sn} en blomst 🌺`,t:3,max:3};
-    const hp=catPos(a);if(hp){if(s===-2)bubbles.push({x:hp.x,y:hp.y-110,text:'Tatt!',t:1,max:1});for(let i=0;i<10;i++)parts.push({type:'heart',x:hp.x+rnd(-20,20),y:hp.y-40,vx:rnd(-60,60),vy:rnd(-160,-60),life:1.2,max:1.2,r:rnd(5,9)});
+    if(b<0&&a===myCat){bubbles.push({x:sp.cx,y:sp.cy-100,text:t('empty',spName(sp)),t:1.2,max:1.2});boop();for(let i=0;i<8;i++)parts.push({type:'dust',x:sp.cx+rnd(-30,30),y:sp.cy-rnd(5,30),vx:rnd(-50,50),vy:rnd(-40,-5),life:.7,max:.7,r:rnd(6,12)});}}
+  else if(k==='found'){const hn=catName(a),sn=catName(b);banner={text:t('found',hn,sn),t:3,max:3};
+    const hp=catPos(a);if(hp){if(s===-2)bubbles.push({x:hp.x,y:hp.y-110,text:t('tagged'),t:1,max:1});for(let i=0;i<10;i++)parts.push({type:'heart',x:hp.x+rnd(-20,20),y:hp.y-40,vx:rnd(-60,60),vy:rnd(-160,-60),life:1.2,max:1.2,r:rnd(5,9)});
       parts.push({type:'fly',x:hp.x,y:hp.y-36,sx:hp.x,sy:hp.y-36,to:b,el:-.7,dur:1,life:1.8,max:1.8});}
     meowCat(a,.1);const vk=voiceOf(a);setTimeout(()=>playVoice(vk),650);}
-  else if(k==='dog'){const cp=catPos(a);if(cp){parts.push({type:'drop',x:cp.x+20,y:cp.y-36,vx:b*80,vy:-260,life:1.6,max:1.6,r:7});bubbles.push({x:cp.x,y:cp.y-115,text:a===myCat?'Valpen tok en blomst! 🐶':'Au!',t:1.4,max:1.4,small:true});}
-    const dd=dogsDisp[s];if(dd)bubbles.push({x:dd.x,y:dd.y-80,text:'Voff!',t:1,max:1,small:true});voff();
+  else if(k==='dog'){const cp=catPos(a);if(cp){parts.push({type:'drop',x:cp.x+20,y:cp.y-36,vx:b*80,vy:-260,life:1.6,max:1.6,r:7});bubbles.push({x:cp.x,y:cp.y-115,text:a===myCat?t('dogTook'):t('ouch'),t:1.4,max:1.4,small:true});}
+    const dd=dogsDisp[s];if(dd)bubbles.push({x:dd.x,y:dd.y-80,text:t('woof'),t:1,max:1,small:true});voff();
     if(a===myCat&&Lp&&Lp.mode==='free'){Lp.kx=b*420;Lp.kt=.35;if(Lp.onGround){Lp.vy=-420;Lp.onGround=false;}}}
-  else if(k==='bark'){const dd=dogsDisp[a];if(dd&&camDist(dd.x,dd.y)<1000){bubbles.push({x:dd.x,y:dd.y-80,text:'Voff voff!',t:1,max:1,small:true});voff(.5);}}
-  else if(k==='fishspawn'){const f=(GS.f||[]).find(f=>f[0]===s);banner={text:'En blomsterfisk har dukket opp! 🐟🌺',t:2.4,max:2.4};if(f&&camDist(f[1],f[2])<1200){plopp();for(let i=0;i<10;i++)parts.push({type:'spark',x:f[1],y:f[2],vx:rnd(-100,100),vy:rnd(-120,40),life:.7,max:.7,r:rnd(3,5)});}else plopp();}
-  else if(k==='fish'){const cp=catPos(a);banner={text:`${CATS[a].name} fant en blomsterfisk! +1 🌺`,t:2.6,max:2.6};ding();
+  else if(k==='bark'){const dd=dogsDisp[a];if(dd&&camDist(dd.x,dd.y)<1000){bubbles.push({x:dd.x,y:dd.y-80,text:t('woof2'),t:1,max:1,small:true});voff(.5);}}
+  else if(k==='fishspawn'){const f=(GS.f||[]).find(f=>f[0]===s);banner={text:t('fishSpawn'),t:2.4,max:2.4};if(f&&camDist(f[1],f[2])<1200){plopp();for(let i=0;i<10;i++)parts.push({type:'spark',x:f[1],y:f[2],vx:rnd(-100,100),vy:rnd(-120,40),life:.7,max:.7,r:rnd(3,5)});}else plopp();}
+  else if(k==='fish'){const cp=catPos(a);banner={text:t('fishGot',catName(a)),t:2.6,max:2.6};ding();
     if(cp){bubbles.push({x:cp.x,y:cp.y-115,text:'+1 🌺',t:1.4,max:1.4});for(let i=0;i<12;i++)parts.push({type:'spark',x:cp.x,y:cp.y-50,vx:rnd(-120,120),vy:rnd(-160,20),life:.8,max:.8,r:rnd(3,6)});}}
-  else if(k==='hint'){const sp=SPOTS[s];if(!sp)return;hintAt[a]={s,until:T+1.8};const d=camDist(sp.hint.x,sp.hint.y);if(d<1500){bubbles.push({x:sp.hint.x,y:sp.hint.y-34,text:MEOW_TXT[a]||'Mjau~',t:1.3,max:1.3,small:true});meowCat(a,.08*clamp(1-d/1400,.1,1));}}
-  else if(k==='deny'){if(a===myCat&&Lp){bubbles.push({x:Lp.x,y:Lp.y-110,text:'Opptatt! Noen er der allerede',t:1.4,max:1.4});if(Lp.mode==='entering'||Lp.mode==='hidwait'||Lp.tw){Lp.tw=null;Lp.mode='x';startTween(Lp,Lp.spot.cx+40,floorY(Lp.spot.lv),.4,40,'exit');}}}
-  else if(k==='sneak'){const p=catPos(a);if(p&&camDist(p.x,p.y)<900)bubbles.push({x:p.x,y:p.y-100,text:'Psst… bytter plass',t:1.2,max:1.2,small:true});}
-  else if(k==='allfound'){setTimeout(()=>{banner={text:'Alle er funnet! 🎉',t:3,max:3};},1500);for(let i=0;i<60;i++)parts.push({type:'petal',x:camX+rnd(0,VW),y:camY+rnd(-200,0),vx:rnd(-30,30),vy:rnd(60,140),life:4,max:4,r:rnd(4,7),rot:rnd(0,6)});}
-  else if(k==='timeup'){banner={text:'Tiden er ute! Se hvor alle gjemte seg',t:2.6,max:2.6};}
+  else if(k==='hint'){const sp=SPOTS[s];if(!sp)return;hintAt[a]={s,until:T+1.8};const d=camDist(sp.hint.x,sp.hint.y);if(d<1500){bubbles.push({x:sp.hint.x,y:sp.hint.y-34,text:t('meow')[a]||'~',t:1.3,max:1.3,small:true});meowCat(a,.08*clamp(1-d/1400,.1,1));}}
+  else if(k==='deny'){if(a===myCat&&Lp){bubbles.push({x:Lp.x,y:Lp.y-110,text:t('busy'),t:1.4,max:1.4});if(Lp.mode==='entering'||Lp.mode==='hidwait'||Lp.tw){Lp.tw=null;Lp.mode='x';startTween(Lp,Lp.spot.cx+40,floorY(Lp.spot.lv),.4,40,'exit');}}}
+  else if(k==='sneak'){const p=catPos(a);if(p&&camDist(p.x,p.y)<900)bubbles.push({x:p.x,y:p.y-100,text:t('sneak'),t:1.2,max:1.2,small:true});}
+  else if(k==='allfound'){setTimeout(()=>{banner={text:t('allFound'),t:3,max:3};},1500);for(let i=0;i<60;i++)parts.push({type:'petal',x:camX+rnd(0,VW),y:camY+rnd(-200,0),vx:rnd(-30,30),vy:rnd(60,140),life:4,max:4,r:rnd(4,7),rot:rnd(0,6)});}
+  else if(k==='timeup'){banner={text:t('timeUp'),t:2.6,max:2.6};}
 }
 function bonk(){tone(170,.12,'square',.07,0,90);tone(95,.16,'sine',.14);}
 function voff(v){v=v||1;tone(320,.09,'square',.06*v,0,230);tone(300,.11,'square',.06*v,.15,210);}
@@ -1236,8 +1394,8 @@ function render(dt){
   };
   if(GS.ros)for(const r of GS.ros){const cat=r[1];if(Lp&&Lp.cat===cat)continue;const p=disp[cat];if(p)drawOne(cat,p,false);}
   if(Lp){drawOne(Lp.cat,Lp,true);c.save();c.translate(Lp.x,Lp.y-122+Math.sin(T*5)*3);tri(c,-8,-6,8,-6,0,4);fs(c,'#E53935',OUT,2);c.restore();
-    let t='';if(Lp.mode==='free'&&ph!=='over'){if(Lp.zone)t=Lp.zone.up?'Trykk ↑ for å gå opp':'Trykk ↓ for å gå ned';else if(Lp.near&&Lp.role==='h'&&!(GS.fd&&GS.fd[Lp.cat]))t=`🔍 Gjem deg ${Lp.near.name}`;else if(Lp.near&&Lp.role==='s'&&ph==='seek')t=`🔍 Let ${Lp.near.name}`;}
-    else if(Lp.mode==='hidden')t='🤫 Du er gjemt · 🔍 for å komme ut';
+    let t='';if(Lp.mode==='free'&&ph!=='over'){if(Lp.zone)t=Lp.zone.up?tt('goUp'):tt('goDown');else if(Lp.near&&Lp.role==='h'&&!(GS.fd&&GS.fd[Lp.cat]))t=tt('promptHide',spName(Lp.near));else if(Lp.near&&Lp.role==='s'&&ph==='seek')t=tt('promptSeek',spName(Lp.near));}
+    else if(Lp.mode==='hidden')t=tt('hiddenNow');
     if(t){c.font='bold 15px '+FONT;c.textAlign='center';c.textBaseline='middle';const w=c.measureText(t).width+18;const by=Lp.mode==='hidden'?Lp.y-150:Lp.y-156;rr(c,Lp.x-w/2,by-13,w,26,13);fs(c,'#FFD54F',OUT,2);c.fillStyle=OUT;c.fillText(t,Lp.x,by);}}
   for(const p of parts)drawPart(c,p);
   for(const b of bubbles)drawBubble(c,b);
@@ -1246,7 +1404,8 @@ function render(dt){
   if(ph==='hide'&&Lp&&Lp.role==='s'){c.fillStyle='rgba(18,10,30,.85)';c.fillRect(0,0,VW,VH);
     c.save();c.translate(-Math.round(camX),-Math.round(camY));c.beginPath();c.arc(Lp.x,Lp.y-40,70,0,7);c.fillStyle='rgba(255,236,170,.18)';c.fill();drawCat(c,CATS[Lp.cat],Lp.x,Lp.y,{t:T,face:Lp.face,pose:'cover',flowers:GS.fl[Lp.cat]});c.restore();
     c.textAlign='center';c.textBaseline='middle';c.font='bold 150px '+FONT;c.lineWidth=10;c.strokeStyle=OUT;c.fillStyle='#FFD54F';const n=String(Math.max(1,Math.ceil(GS.t/10)));c.strokeText(n,VW/2,VH/2-20);c.fillText(n,VW/2,VH/2-20);
-    c.font='bold 26px '+FONT;c.fillStyle='#fff';c.fillText('Du lukker øynene og teller … de andre gjemmer seg!',VW/2,VH/2+85);}
+    c.font='bold 26px '+FONT;c.fillStyle='#fff';c.fillText(t('countOverlay'),VW/2,VH/2+85);}
+  if(GS.pz){c.fillStyle='rgba(20,12,30,.55)';c.fillRect(0,0,VW,VH);c.textAlign='center';c.textBaseline='middle';c.font='bold 64px '+FONT;c.lineWidth=8;c.strokeStyle=OUT;c.fillStyle='#FFD54F';c.strokeText(t('paused'),VW/2,VH/2-20);c.fillText(t('paused'),VW/2,VH/2-20);c.font='bold 22px '+FONT;c.fillStyle='#fff';c.fillText(t('pausedSub'),VW/2,VH/2+40);}
   drawHUD(c);
 }
 function drawPart(c,p){const a=Math.max(0,p.life/p.max);c.save();
@@ -1265,11 +1424,11 @@ function drawBubble(c,b){const a=Math.min(1,b.t/b.max*3,(b.max-b.t)*8+.2);c.save
 function drawHUD(c){
   c.save();c.textBaseline='middle';const ph=GS.ph,ct=camTarget();
   rr(c,14,12,318,56,28);fs(c,'rgba(255,255,255,.94)');
-  let who='',cat=-1;if(Lp){cat=Lp.cat;who=Lp.role==='s'?'Du leter':'Du gjemmer deg';if(GS.fd&&GS.fd[cat])who='Du er funnet';}
-  else if(GS.ros&&GS.ros.length){cat=GS.ros[obsIdx%GS.ros.length][1];who=`👀 Ser på ${CATS[cat].name} (← →)`;}
+  let who='',cat=-1;if(Lp){cat=Lp.cat;who=Lp.role==='s'?t('youSeek'):t('youHide');if(GS.fd&&GS.fd[cat])who=t('youFound');}
+  else if(GS.ros&&GS.ros.length){cat=GS.ros[obsIdx%GS.ros.length][1];who=t('watching',catName(cat));}
   if(cat>=0)drawCat(c,CATS[cat],48,62,{t:T,face:1,scale:.42});
-  c.font='bold 14px '+FONT;c.fillStyle='#8a7363';c.textAlign='left';c.fillText(`Runde ${GS.rd} · ${who}`+(cat>=0?` · 🌺 ${GS.fl[cat]}`:''),78,28);
-  const tl=GS.t/10;c.font='bold 26px '+FONT;c.fillStyle=(ph==='seek'&&tl<15)?'#E53935':OUT;c.fillText(ph==='hide'?`${Math.ceil(tl)} sek`:`⏱ ${fmt(tl)}`,78,52);
+  c.font='bold 14px '+FONT;c.fillStyle='#8a7363';c.textAlign='left';c.fillText(`${t('roundX',GS.rd)} · ${who}`+(cat>=0?` · 🌺 ${GS.fl[cat]}`:''),78,28);
+  const tl=GS.t/10;c.font='bold 26px '+FONT;c.fillStyle=(ph==='seek'&&tl<15)?'#E53935':OUT;c.fillText(ph==='hide'?t('sec',Math.ceil(tl)):`⏱ ${fmt(tl)}`,78,52);
   const ros=GS.ros||[],hs=ros.filter(r=>r[2]==='h'),ss=ros.filter(r=>r[2]==='s'),n=hs.length+ss.length,bw=n*46+40,bx=VW-14-bw;
   rr(c,bx,12,bw,56,28);fs(c,'rgba(255,255,255,.94)');
   [...hs,...ss].forEach((r,i)=>{const x=bx+28+i*46+(i>=hs.length?12:0),cc=r[1],fd=GS.fd&&GS.fd[cc];c.save();if(r[2]==='h'&&!fd)c.globalAlpha=.35;drawCat(c,CATS[cc],x,62,{t:T+i,face:1,scale:.36});c.restore();
@@ -1305,10 +1464,10 @@ let screen='start',lobSig='',lobCards=[];
 function show(id){screen=id;['start','lobby','play','awards'].forEach(k=>document.getElementById(k).classList.toggle('on',k===id));}
 function isHost(){return !!HS;}
 function renderLobby(){
-  const modeTxt={solo:'🎮 Alene med roboter',room:'🌐 Lobby for alle som har siden åpen',peer:`🌐 Romkode: ${Net.code}`,local:'🧪 Test i flere faner'}[Net.kind]||'';
-  const sub={solo:'Du er verten. Legg til roboter og velg om du vil gjemme deg eller lete.',room:'Alle som åpner denne siden nå, ser den samme lobbyen.',peer:'Del koden med vennene dine – de trykker «Bli med» og skriver den inn.',local:'Åpne siden i flere faner for å teste nettspillet.'}[Net.kind]||'';
+  const modeTxt={solo:t('modeSolo'),room:t('modeRoom'),peer:t('modePeer',Net.code),local:t('modeLocal')}[Net.kind]||'';
+  const sub={solo:t('subSolo'),room:t('subRoom'),peer:t('subPeer'),local:t('subLocal')}[Net.kind]||'';
   const noHost=!GS;document.getElementById('noHost').style.display=noHost?'':'none';document.getElementById('makeHostBtn').style.display=Net.kind==='peer'?'none':'';document.getElementById('lobMain').style.display=noHost?'none':'';
-  const sig=JSON.stringify([modeTxt,noHost,GS&&[GS.ph,GS.rd,GS.nr,GS.mn,GS.hn,GS.nd,GS.nf,GS.fl,GS.as,GS.last,GS.inm],myLob.cat,myLob.role,isHost(),everyone().map(e=>[e.id,e.p&&e.p.nm])]);
+  const sig=JSON.stringify([LANG,myLob.cn,modeTxt,noHost,GS&&[GS.ph,GS.rd,GS.nr,GS.mn,GS.hn,GS.nd,GS.nf,GS.fl,GS.as,GS.last,GS.inm],myLob.cat,myLob.role,isHost(),everyone().map(e=>[e.id,e.p&&e.p.nm])]);
   if(sig===lobSig)return;lobSig=sig;
   document.getElementById('lobMode').textContent=modeTxt;document.getElementById('lobSub').textContent=sub;
   if(noHost)return;
@@ -1317,8 +1476,8 @@ function renderLobby(){
   const grid=document.getElementById('catGrid');grid.innerHTML='';lobCards=[];
   CATS.forEach((d,i)=>{const o=owner[i],out=GS.fl[i]<=0,mine=o&&o[0]===Net.myId,taken=o&&!mine&&o[0];
     const b=document.createElement('button');b.className='card'+(mine?' mine':'')+(taken?' taken':'')+(out?' out':'');
-    const who=out?'Ute 😿':mine?'Deg':o?(o[0]?nameOf(o[0]):'🤖 Robot'):'Ledig';
-    b.innerHTML=`<canvas width="320" height="280"></canvas><b></b><span></span>`;b.querySelector('b').textContent=`${d.name} · 🌺${GS.fl[i]}`;b.querySelector('span').textContent=who;
+    const who=out?t('cOut'):mine?t('cYou'):o?(o[0]?nameOf(o[0]):t('cRobot')):t('cFree');
+    b.innerHTML=`<canvas width="320" height="280"></canvas><b></b><span></span>`;b.querySelector('b').textContent=`${catName(i)} · 🌺${GS.fl[i]}`;b.querySelector('span').textContent=who;
     b.onclick=()=>{if(out||taken)return;myLob.cat=i;if(myLob.role==='o')myLob.role='h';pubLob();meowCat(i,.08);lobSig='';};grid.appendChild(b);
     lobCards.push({c:b.querySelector('canvas').getContext('2d'),i,mine});});
   // roller
@@ -1328,31 +1487,31 @@ function renderLobby(){
   const pl=document.getElementById('plist');pl.innerHTML='';
   const hostId=hostE?hostE.id:null;
   for(const a of as){const li=document.createElement('li');const dot=document.createElement('span');dot.className='dot';dot.style.background=a[1]>=0?CATS[a[1]].fur:'#ccc';
-    const nm=document.createElement('span');nm.className='nm';nm.textContent=(a[0]?nameOf(a[0]):'🤖 Robot')+(a[0]===Net.myId?' (deg)':'')+(a[0]&&a[0]===hostId?' 👑':'');
-    const rl=document.createElement('span');rl.textContent=(a[1]>=0?CATS[a[1]].name+' · ':'(velg katt) · ')+({h:'🙈 gjemmer seg',s:'🔍 leter',o:'👀 ser på'}[a[2]]);
-    li.append(dot,nm,rl);if(!a[0]&&isHost()){const x=document.createElement('button');x.className='x';x.textContent='✕';x.title='Fjern robot';x.onclick=()=>{HS.bots=HS.bots.filter(b=>b.cat!==a[1]);hostAssign();publishG();lobSig='';};li.append(x);}
+    const nm=document.createElement('span');nm.className='nm';nm.textContent=(a[0]?nameOf(a[0]):t('cRobot'))+(a[0]===Net.myId?t('meTag'):'')+(a[0]&&a[0]===hostId?' 👑':'');
+    const rl=document.createElement('span');rl.textContent=(a[1]>=0?catName(a[1])+' · ':t('pickCat'))+({h:t('rlH'),s:t('rlS'),o:t('rlO')}[a[2]]);
+    li.append(dot,nm,rl);if(!a[0]&&isHost()){const x=document.createElement('button');x.className='x';x.textContent='✕';x.title=t('removeBot');x.onclick=()=>{HS.bots=HS.bots.filter(b=>b.cat!==a[1]);hostAssign();publishG();lobSig='';};li.append(x);}
     pl.append(li);}
   const{h,s}=teamCounts(as),ok=h===s&&h>0;const st=document.getElementById('teamStatus');st.className='status '+(ok?'ok':'bad');
-  st.textContent=`🙈 ${h} gjemmer seg · 🔍 ${s} leter — `+(ok?'like lag, klare! ✔':h+s===0?'ingen er valgt ennå':'lagene må være like store');
+  st.textContent=t('team',h,s)+(ok?t('teamOk'):h+s===0?t('teamNone'):t('teamBad'));
   // vertens innstillinger
   const hp=document.getElementById('hostPanel');const host=isHost();
-  document.getElementById('hostOnly').textContent=host?'':`(bare verten ${hostE?nameOf(hostE.id):''} kan endre)`;
+  document.getElementById('hostOnly').textContent=host?'':t('hostOnly',hostE?nameOf(hostE.id):'');
   hp.querySelectorAll('button').forEach(b=>b.disabled=!host);
   const mk=(el,label,vals,cur,fmtv,onp,dis)=>{el.innerHTML='';el.append(label);vals.forEach(v=>{const b=document.createElement('button');b.className='chip'+(v===cur?' on':'');b.textContent=fmtv(v);b.disabled=!host||dis;b.onclick=()=>{onp(v);lobSig='';};el.append(b);});};
-  mk(document.getElementById('roundSet'),'🔁 Runder: ',[1,2,3,4,5,6,8,10],GS.nr,v=>String(v),v=>{ROUNDS=v;store.set('rounds',v);HS.nr=v;},GS.rd>0);
-  mk(document.getElementById('minSet'),'⏱ Letetid: ',[1,2,3,4,5],GS.mn,v=>v+' min',v=>{SEEK_MIN=v;store.set('min',v);HS.mn=v;});
-  mk(document.getElementById('hintSet'),'💡 Hint fra gjemte katter: ',[1,0],GS.hn,v=>v?'På':'Av',v=>{HINTS=!!v;store.set('hints',HINTS);HS.hn=HINTS;});
-  mk(document.getElementById('dogSet'),'🐶 Valper: ',[0,1,2,3,4,5],GS.nd,v=>String(v),v=>{NDOGS=v;store.set('dogs',v);HS.nd=v;});
-  mk(document.getElementById('fishSet'),'🐟 Blomsterfisker: ',[0,1,2,3],GS.nf,v=>String(v),v=>{NFISH=v;store.set('fish',v);HS.nf=v;});
-  const sb=document.getElementById('startRoundBtn');sb.disabled=!host||!ok;sb.textContent=host?`Start runde ${GS.rd+1} av ${GS.nr} ▶`:`Venter på at verten starter …`;
+  mk(document.getElementById('roundSet'),t('rounds'),[1,2,3,4,5,6,8,10],GS.nr,v=>String(v),v=>{ROUNDS=v;store.set('rounds',v);HS.nr=v;},GS.rd>0);
+  mk(document.getElementById('minSet'),t('mins'),[1,2,3,4,5],GS.mn,v=>t('minU',v),v=>{SEEK_MIN=v;store.set('min',v);HS.mn=v;});
+  mk(document.getElementById('hintSet'),t('hints'),[1,0],GS.hn,v=>v?t('on'):t('off'),v=>{HINTS=!!v;store.set('hints',HINTS);HS.hn=HINTS;});
+  mk(document.getElementById('dogSet'),t('dogs'),[0,1,2,3,4,5],GS.nd,v=>String(v),v=>{NDOGS=v;store.set('dogs',v);HS.nd=v;});
+  mk(document.getElementById('fishSet'),t('fish'),[0,1,2,3],GS.nf,v=>String(v),v=>{NFISH=v;store.set('fish',v);HS.nf=v;});
+  const sb=document.getElementById('startRoundBtn');sb.disabled=!host||!ok;sb.textContent=host?t('startRound',GS.rd+1,GS.nr):t('waitHost');
   // forrige runde og stilling
-  const lb=document.getElementById('lastBox');if(GS.last){lb.style.display='';lb.innerHTML='';const h2=document.createElement('h2');h2.className='step';h2.style.marginTop='0';h2.textContent=`Runde ${GS.last.rd} er ferdig`;lb.append(h2);
+  const lb=document.getElementById('lastBox');if(GS.last){lb.style.display='';lb.innerHTML='';const h2=document.createElement('h2');h2.className='step';h2.style.marginTop='0';h2.textContent=t('lastRound',GS.last.rd);lb.append(h2);
     const ul=document.createElement('ul');ul.className='plist';for(const[cat,role,by,sec,sp]of GS.last.res){const li=document.createElement('li');
-      li.textContent=role==='s'?`🔍 ${CATS[cat].name} lette`:by>=0?`🙈 ${CATS[cat].name} ble funnet av ${CATS[by].name} etter ${fmt(sec)} og ga en blomst 🌺`:`🏆 ${CATS[cat].name} ble ikke funnet – gjemte seg ${sp>=0?SPOTS[sp].name:'godt'}`;ul.append(li);}lb.append(ul);}else lb.style.display='none';
+      li.textContent=role==='s'?t('resSeek',catName(cat)):by>=0?t('resFound',catName(cat),catName(by),fmt(sec)):t('resHidden',catName(cat),sp>=0?spName(sp):t('hidWell'));ul.append(li);}lb.append(ul);}else lb.style.display='none';
   const sbx=document.getElementById('standBox');if(GS.inm&&GS.inm.length){sbx.style.display='';const sd=document.getElementById('stand');sd.innerHTML='';
-    [...GS.inm].sort((a,b)=>GS.fl[b]-GS.fl[a]).forEach(i=>{const s=document.createElement('span');s.textContent=`${CATS[i].name} 🌺 ${GS.fl[i]}`+(GS.fl[i]<=0?' (ute)':'');sd.append(s);});}else sbx.style.display='none';
+    [...GS.inm].sort((a,b)=>GS.fl[b]-GS.fl[a]).forEach(i=>{const s=document.createElement('span');s.textContent=`${catName(i)} 🌺 ${GS.fl[i]}`+(GS.fl[i]<=0?t('outTag'):'');sd.append(s);});}else sbx.style.display='none';
 }
-function drawLobbyCards(t){for(const p of lobCards){const c=p.c;c.setTransform(2,0,0,2,0,0);c.clearRect(0,0,160,140);c.fillStyle='rgba(200,139,82,.25)';c.beginPath();c.ellipse(80,128,52,7,0,0,7);c.fill();
+function drawLobbyCards(t){if(setOpen)return;for(const p of lobCards){const c=p.c;c.setTransform(2,0,0,2,0,0);c.clearRect(0,0,160,140);c.fillStyle='rgba(200,139,82,.25)';c.beginPath();c.ellipse(80,128,52,7,0,0,7);c.fill();
   const tt=t+p.i*.7,hop=p.mine?Math.abs(Math.sin(tt*6))*8:0;drawCat(c,CATS[p.i],84,126-hop,{t:tt,face:1,scale:1.1,move:p.mine?1:0,blink:(tt%3.3)<.13,flowers:GS?GS.fl[p.i]:3});}}
 
 /* ================= Premieutdeling ================= */
@@ -1362,8 +1521,8 @@ function renderAwardsList(){
   let pl=0;list.forEach((e,k)=>{if(k===0||e.n!==list[k-1].n)pl=k+1;e.place=pl;});
   const sig=JSON.stringify(list);if(sig!==awardSig){awardSig=sig;awardT=0;fanfare();awardConf=[];for(let i=0;i<120;i++)awardConf.push({x:rnd(0,VW),y:rnd(-VH,0),vx:rnd(-20,20),vy:rnd(50,120),r:rnd(4,7),rot:rnd(0,6),col:['#E53935','#FFD54F','#64B5F6','#81C784','#F06292'][i%5]});
     const medal=p=>p===1?'🥇':p===2?'🥈':p===3?'🥉':'';const ol=document.getElementById('rankList');ol.innerHTML='';
-    for(const e of list){const li=document.createElement('li');li.innerHTML='<span class="pl"></span><span class="nm"></span><span></span>';li.children[0].textContent=`${medal(e.place)} ${e.place}. plass`;li.children[1].textContent=CATS[e.i].name;li.children[2].textContent=`🌺 × ${e.n}`;ol.append(li);}
-    document.getElementById('newBtn').style.display=isHost()?'':'none';document.getElementById('awardWait').textContent=isHost()?'':'Venter på at verten starter et nytt spill …';}
+    for(const e of list){const li=document.createElement('li');li.innerHTML='<span class="pl"></span><span class="nm"></span><span></span>';li.children[0].textContent=`${medal(e.place)} ${t('place',e.place)}`;li.children[1].textContent=catName(e.i);li.children[2].textContent=`🌺 × ${e.n}`;ol.append(li);}
+    document.getElementById('newBtn').style.display=isHost()?'':'none';document.getElementById('awardWait').textContent=isHost()?'':t('waitNew');}
   return list;
 }
 function drawAwards(dt,list){
@@ -1375,13 +1534,13 @@ function drawAwards(dt,list){
   c.fillStyle='#5D4037';c.fillRect(0,470,VW,70);
   const top3=list.slice(0,3),slotX=[480,300,660],HH=p=>p===1?170:p===2?120:p===3?85:60,COL=p=>p===1?'#FFD54F':p===2?'#CFD8DC':p===3?'#FFAB91':'#BCAAA4';
   top3.forEach((e,k)=>{const x=slotX[k],h=HH(e.place),top=470-h;rr(c,x-80,top,160,h,8);fs(c,COL(e.place));c.fillStyle=OUT;c.font='bold 44px '+FONT;c.textAlign='center';c.textBaseline='middle';c.fillText(String(e.place),x,top+Math.min(h/2,60));
-    c.fillStyle='#fff';c.font='bold 19px '+FONT;c.fillText(CATS[e.i].name,x,490);c.font='bold 16px '+FONT;c.fillText(`🌺 × ${e.n}`,x,516);
+    c.fillStyle='#fff';c.font='bold 19px '+FONT;c.fillText(catName(e.i),x,490);c.font='bold 16px '+FONT;c.fillText(`🌺 × ${e.n}`,x,516);
     const hop=e.place===1?Math.abs(Math.sin(awardT*4))*10:Math.abs(Math.sin(awardT*3+k))*4;drawCat(c,CATS[e.i],x-12,top-hop,{t:awardT+k,face:1,scale:1.5,flowers:e.n,blink:((awardT+k)%3)<.12});
     const mx=x-12+24*1.5,my=top-hop-14*1.5;c.strokeStyle=e.place===1?'#1E88E5':e.place===2?'#43A047':'#E53935';c.lineWidth=4;c.beginPath();c.moveTo(mx-10,my-26);c.lineTo(mx,my-6);c.lineTo(mx+10,my-26);c.stroke();c.beginPath();c.arc(mx,my+4,11,0,7);fs(c,COL(e.place),OUT,2);star(c,mx,my+4,6,'#fff');});
   for(const p of awardConf){p.y+=p.vy*dt;p.x+=p.vx*dt+Math.sin(awardT*2+p.y*.02)*.5;p.rot+=dt*4;if(p.y>VH+10){p.y=-10;p.x=rnd(0,VW);}c.save();c.translate(p.x,p.y);c.rotate(p.rot);c.fillStyle=p.col;c.fillRect(-p.r,-p.r*.4,p.r*2,p.r*.8);c.restore();}
-  const winners=list.filter(e=>e.place===1).map(e=>CATS[e.i].name),wj=winners.length>1?winners.slice(0,-1).join(', ')+' og '+winners[winners.length-1]:winners[0];
-  c.textAlign='center';c.textBaseline='middle';c.font='bold 38px '+FONT;c.lineWidth=8;c.strokeStyle=OUT;c.fillStyle='#FFD54F';c.strokeText('Premieutdeling 🏆',VW/2,56);c.fillText('Premieutdeling 🏆',VW/2,56);
-  c.font='bold 22px '+FONT;c.fillStyle='#fff';c.fillText(`Gratulerer, ${wj}!`,VW/2,100);
+  const winners=list.filter(e=>e.place===1).map(e=>catName(e.i)),wj=winners.length>1?winners.slice(0,-1).join(', ')+t('and')+winners[winners.length-1]:winners[0];
+  c.textAlign='center';c.textBaseline='middle';c.font='bold 38px '+FONT;c.lineWidth=8;c.strokeStyle=OUT;c.fillStyle='#FFD54F';c.strokeText(t('awardsTitle'),VW/2,56);c.fillText(t('awardsTitle'),VW/2,56);
+  c.font='bold 22px '+FONT;c.fillStyle='#fff';c.fillText(t('congrats',wj),VW/2,100);
 }
 
 /* ================= Hovedløkke ================= */
@@ -1397,7 +1556,7 @@ function frame(ts){
     if(want==='play'){
       if(GS.rd!==lastRd){lastRd=GS.rd;lastEv=-1;startLocalRound();}
       if(screen!=='play'){show('play');document.querySelector('#play .stage').scrollIntoView({behavior:'smooth',block:'center'});}
-      processEvents();if(Lp)myTick(dt);else{if(pressed.left)obsIdx--;if(pressed.right)obsIdx++;}
+      processEvents();if(GS.pz){}else if(Lp)myTick(dt);else{if(pressed.left)obsIdx--;if(pressed.right)obsIdx++;}
       pubMe();smoothAll(dt);updFx(dt);render(dt);
     }else{
       if(Lp){Lp=null;netSet({me:null,act:null});}
@@ -1420,9 +1579,9 @@ document.getElementById('localBtn').onclick=()=>{ac();loadVoices();startLocal();
 document.getElementById('roomBtn').onclick=async()=>{ac();loadVoices();if(await startRoom())enterLobby();};
 const errEl=document.getElementById('netErr');
 function genCode(){const A='ABCDEFGHJKLMNPQRSTUVWXYZ';let s='';for(let i=0;i<4;i++)s+=A[Math.floor(Math.random()*A.length)];return s;}
-document.getElementById('createBtn').onclick=async()=>{ac();loadVoices();errEl.textContent='Lager rom …';try{await startPeerHost(genCode());hostCreate();errEl.textContent='';enterLobby();publishG();}catch(e){errEl.textContent='Kunne ikke lage rom: '+(e.message||e.type||'ukjent feil');}};
-document.getElementById('joinBtn').onclick=async()=>{ac();loadVoices();const code=document.getElementById('codeIn').value.trim().toUpperCase();if(code.length!==4){errEl.textContent='Skriv inn en kode med 4 bokstaver';return;}
-  errEl.textContent='Kobler til …';try{await startPeerJoin(code);errEl.textContent='';enterLobby();}catch(e){errEl.textContent='Fant ikke rommet. Sjekk koden og prøv igjen.';}};
+document.getElementById('createBtn').onclick=async()=>{ac();loadVoices();errEl.textContent=t('creating');try{await startPeerHost(genCode());hostCreate();errEl.textContent='';enterLobby();publishG();}catch(e){errEl.textContent=t('createFail')+(e.message||e.type||'?');}};
+document.getElementById('joinBtn').onclick=async()=>{ac();loadVoices();const code=document.getElementById('codeIn').value.trim().toUpperCase();if(code.length!==4){errEl.textContent=t('need4');return;}
+  errEl.textContent=t('connecting');try{await startPeerJoin(code);errEl.textContent='';enterLobby();}catch(e){errEl.textContent=t('notFound');}};
 document.getElementById('makeHostBtn').onclick=()=>{if(findHost())return;hostCreate();publishG();lobSig='';};
 document.getElementById('leaveBtn').onclick=()=>{location.reload();};
 document.getElementById('botH').onclick=()=>{if(HS){hostAddBot('h');publishG();lobSig='';}};
@@ -1431,18 +1590,58 @@ document.getElementById('botBal').onclick=()=>{if(HS){hostBalance();publishG();l
 document.getElementById('startRoundBtn').onclick=()=>{if(HS){ac();hostStartRound();publishG();}};
 document.getElementById('newBtn').onclick=()=>{if(HS){HS.fl=CATS.map(()=>START_FLOWERS);HS.rd=0;HS.inm=[];HS.last=null;HS.ph='lobby';HS.nr=ROUNDS;awardSig='';publishG();}};
 const KEYMAP={ArrowLeft:'left',a:'left',A:'left',ArrowRight:'right',d:'right',D:'right',ArrowUp:'jump',w:'jump',W:'jump',' ':'search',ArrowDown:'search',s:'search',S:'search',Enter:'search'};
-addEventListener('keydown',e=>{const k=KEYMAP[e.key];if(!k||screen!=='play'||e.target.tagName==='INPUT')return;e.preventDefault();if(!keys[k])pressed[k]=true;keys[k]=true;});
+addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();toggleSettings();return;}const k=KEYMAP[e.key];if(!k||screen!=='play'||setOpen||e.target.tagName==='INPUT')return;e.preventDefault();if(!keys[k])pressed[k]=true;keys[k]=true;});
 addEventListener('keyup',e=>{const k=KEYMAP[e.key];if(k)keys[k]=false;});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false;});
 document.querySelectorAll('.ctl').forEach(b=>{const k=b.dataset.k;
   const on=e=>{e.preventDefault();ac();if(!keys[k])pressed[k]=true;keys[k]=true;b.classList.add('on');};
   const off=()=>{keys[k]=false;b.classList.remove('on');};
   b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointerleave',off);b.addEventListener('pointercancel',off);b.addEventListener('contextmenu',e=>e.preventDefault());});
-const muteBtn=document.getElementById('muteBtn');muteBtn.onclick=()=>{muted=!muted;muteBtn.textContent=muted?'🔇 Lyd av':'🔊 Lyd';};
+const muteBtn=document.getElementById('muteBtn');muteBtn.onclick=()=>{muted=!muted;muteBtn.textContent=muted?t('muted'):t('sound');};
 
 // claude.ai: finnes «room», vises lobbyen for alle som har siden åpen
 (async()=>{try{if(window.claude&&claude.use){const r=await claude.use('room');if(r){roomNS=r;document.getElementById('roomBox').style.display='';document.getElementById('codeHead').style.display='';}else{document.getElementById('roomNote').style.display='';}
   const u=await claude.use('user');if(u&&!nick.value){const me=await u.me();if(me&&me.name){nick.value=me.name.split(' ')[0].slice(0,16);}}}}catch(e){}})();
+
+/* ================= Innstillinger, språk, avslutt ================= */
+let setOpen=false;const tt=(...a)=>t(...a);
+function setLang(l){LANG=l;try{localStorage.setItem('fk2_lang',JSON.stringify(l));}catch(e){}applyLang();muteBtn.textContent=muted?t('muted'):t('sound');
+  document.getElementById('pagesLink').textContent=PAGES_URL;lobSig='';awardSig='';renderSettings();}
+function renderSettings(){
+  const ls=document.getElementById('langSet');ls.innerHTML='';const lb=document.createElement('span');lb.textContent=t('lang');ls.append(lb);
+  [['nb','Norsk'],['zh','中文'],['en','English']].forEach(([k,lab])=>{const b=document.createElement('button');b.className='chip'+(LANG===k?' on':'');b.textContent=lab;b.onclick=()=>setLang(k);ls.append(b);});
+  document.getElementById('sfxR').value=Math.round(SFXV*100);document.getElementById('voxR').value=Math.round(VOXV*100);
+  const cn=document.getElementById('setCatName');if(document.activeElement!==cn)cn.value=myLob.cn||'';
+  document.getElementById('setCatRow').style.display=Net.kind?'':'none';
+  const hl=document.getElementById('hostLive');const live=!!HS;hl.style.display=live?'':'none';
+  if(live){const mk=(id,label,vals,cur,lab,onp)=>{const el=document.getElementById(id);el.innerHTML='';const sp=document.createElement('span');sp.textContent=label;el.append(sp);
+      vals.forEach(v=>{const b=document.createElement('button');b.className='chip'+(v===cur?' on':'');b.textContent=lab(v);b.onclick=()=>{onp(v);renderSettings();lobSig='';};el.append(b);});};
+    mk('liveHint',t('hints'),[1,0],HS.hn?1:0,v=>v?t('on'):t('off'),v=>{HINTS=!!v;store.set('hints',HINTS);HS.hn=HINTS;});
+    mk('liveDogs',t('dogs'),[0,1,2,3,4,5],HS.nd,v=>String(v),v=>{NDOGS=v;store.set('dogs',v);HS.nd=v;
+      if(HS.ph==='hide'||HS.ph==='seek'){while(HS.dogs.length<v){const ds=randSpawn();HS.dogs.push({x:ds.x,y:floorY(ds.lv),lv:ds.lv,face:1,move:0,state:'wander',route:[],t:0,chaseT:0,calm:3,pause:0,speed:150,tw:null});}HS.dogs.length=Math.min(HS.dogs.length,v);}});
+    const pb=document.getElementById('pauseBtn');const inRound=HS.ph==='hide'||HS.ph==='seek';pb.style.display=inRound?'':'none';pb.textContent=HS.pz?t('resume'):t('pause');
+    pb.onclick=()=>{HS.pz=!HS.pz;renderSettings();};}
+  document.getElementById('exitHost').style.display=(HS&&Net.kind&&Net.kind!=='solo')?'':'none';
+}
+function toggleSettings(force){setOpen=force==null?!setOpen:force;document.getElementById('setModal').classList.toggle('on',setOpen);document.getElementById('exitBox').style.display='none';
+  for(const k in keys)keys[k]=false;if(setOpen)renderSettings();}
+document.getElementById('setBtn').onclick=()=>toggleSettings(true);
+document.getElementById('gearBtn').onclick=()=>toggleSettings(true);
+document.getElementById('closeSet').onclick=()=>toggleSettings(false);
+document.getElementById('setModal').addEventListener('click',e=>{if(e.target.id==='setModal')toggleSettings(false);});
+document.getElementById('sfxR').oninput=e=>{SFXV=e.target.value/100;store.set('sfx',SFXV);};
+document.getElementById('sfxR').onchange=()=>tone(880,.12,'triangle',.12);
+document.getElementById('voxR').oninput=e=>{VOXV=e.target.value/100;store.set('vox',VOXV);};
+document.getElementById('setCatName').oninput=e=>{myLob.cn=e.target.value;const ci=document.getElementById('catName');if(ci)ci.value=myLob.cn;if(Net.kind)pubLob();lobSig='';};
+document.getElementById('catName').oninput=e=>{myLob.cn=e.target.value;if(Net.kind)pubLob();lobSig='';};
+document.getElementById('catName').value=myLob.cn||'';
+document.getElementById('exitBtn').onclick=()=>{if(!Net.kind){toggleSettings(false);return;}document.getElementById('exitBox').style.display='';};
+document.getElementById('exitNo').onclick=()=>{document.getElementById('exitBox').style.display='none';};
+document.getElementById('exitYes').onclick=()=>{try{netSet({g:null,me:null,lob:null,act:null});Net.send();}catch(e){}setTimeout(()=>location.reload(),150);};
+// Romkode krever WebRTC – inne i claude.ai er det sperret
+let RTC_OK=false;try{if(typeof RTCPeerConnection!=='undefined'){const pc=new RTCPeerConnection();pc.close();RTC_OK=true;}}catch(e){}
+if(!RTC_OK){document.getElementById('rtcBox').style.display='none';document.getElementById('noRtc').style.display='';const a=document.getElementById('pagesLink');a.href=PAGES_URL;a.textContent=PAGES_URL;}
+applyLang();muteBtn.textContent=muted?t('muted'):t('sound');
 requestAnimationFrame(frame);
 </script>
 </body>
